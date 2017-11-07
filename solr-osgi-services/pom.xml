@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>hu.blackbelt</groupId>
+        <artifactId>solr-osgi-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../solr-osgi-parent</relativePath>
+    </parent>
+
+    <artifactId>solr-osgi-services</artifactId>
+    <packaging>bundle</packaging>
+
+    <name>Solr OSGi services</name>
+    <description>Implementation of Solr OSGi services.</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <!--configuration>
+                    <instructions>
+                        <Export-Package>
+                            hu.blackbelt.solr.services;version=${project.version}
+                        </Export-Package>
+                    </instructions>
+                </configuration-->
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.cmpn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.metatype.annotations</artifactId>
+        </dependency>
+    </dependencies>
+</project>
