@@ -4,21 +4,45 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(name="Solr container manager")
-@interface CoreContainerConfig {
+@interface SolrCoreContainerConfig {
+
+    /* Environmental parameters */
     @AttributeDefinition(
             name = "Solr Home",
             description = "The solr  directory which contains solr base files"
     )
-    String solrHome() default "~/.solr";
+    String solrHome();
 
     @AttributeDefinition(
             name = "Solr Installation Directory",
             description = "The directory where solr is installed"
     )
-    String solrInstallDir() default "~/.solr";
+    String solrInstallDir();
 
-    String excludePattern() default "/partials/.+,/libs/.+,/css/.+,/js/.+,/img/.+,/tpl/.+";
+    @AttributeDefinition(
+            name = "Run ZooKeeper",
+            description = "Causes Solr to run an embedded version of ZooKeeper. Set to the address of ZooKeeper on this node; this allows us to " +
+                    "know who you are in the list of addresses in the zkHost connect string. Use -DzkRun (with no value) to get the default value." +
+                    "Defaults to localhost:<hostPort+1000>. Same as solr -DzkRun parameter"
+    )
+    String zkRun();
 
+    @AttributeDefinition(
+            name = "ZooKeeper host connect",
+            description = "The host address for ZooKeeper. Usually this is a comma-separated list of addresses to each node in your ZooKeeper " +
+                    "ensemble. Same as solr -DzkHost parameter."
+    )
+    String zkHost();
+
+    @AttributeDefinition(
+            name = "ZooKeeper client timeout",
+            description = "The time a client is allowed to not talk to ZooKeeper before its session expires. Defaults to 15000." +
+                    "Same as solr -DzkClientTimeout parameter"
+    )
+    int zkClientTimeout() default 15000;
+
+
+    /* Solr.xml parameters */
     @AttributeDefinition(
             name = "Custom AdminHandler",
             description = "If used, this attribute should be set to the FQN (Fully qualified name) of a class that inherits from " +
@@ -87,12 +111,6 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
       Solr Cloud prameters
       This section is ignored unless theSolr instance is started with either -DzkRun or -DzkHost
      */
-
-    @AttributeDefinition(
-            name = "Run ZooKeeper",
-            description = "Run Zookeper server"
-    )
-    boolean zkRun() default false;
 
     @AttributeDefinition(
             name = "SolrCloud - distributed update connection time ",
@@ -186,7 +204,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "Shard Handler Factory - Name",
             description = "Name of hard handler factory"
     )
-    String shardHandleFactoryName() default "sardHandlerFactory";
+    String shardHandleFactoryName() default "shardHandlerFactory";
 
 
     @AttributeDefinition(

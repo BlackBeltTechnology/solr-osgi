@@ -185,6 +185,7 @@
         <feature>apache-httpclient</feature>
         <feature>dropwizard-metrics</feature>
 
+        <bundle start-level="35">mvn:com.google.jimfs/jimfs/1.1</bundle>
         <bundle start-level="40">mvn:com.github.ben-manes.caffeine/caffeine/2.5.6</bundle>
         <bundle start-level="40">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.noggit/0.8_1</bundle>
         <bundle start-level="40">mvn:com.carrotsearch/hppc/0.7.2</bundle>
@@ -193,6 +194,21 @@
         <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle>
         <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
 
-        <bundle start-level="40">mvn:com.google.jimfs/jimfs/1.1</bundle>
     </feature>
+
+
+    <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">
+        <feature>scr</feature>
+        <feature>solr</feature>
+        <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-services/${project.version}</bundle>
+    </feature>
+
+    <feature install= "false" name="solr-http" version="7.0.1" description="Apache Solr HTTP">
+        <feature>http-whiteboard</feature>
+        <feature>solr-services</feature>
+        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.servlet/2.3.12</bundle>
+        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.osgi/2.3.12</bundle>
+        <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-http/${project.version}</bundle>
+    </feature>
+
 </features>

@@ -4,6 +4,7 @@ import com.codahale.metrics.jvm.ClassLoadingGaugeSet;
 import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
 import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
 import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
+import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
@@ -11,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileCleaningTracker;
 import org.apache.http.client.HttpClient;
 import org.apache.lucene.util.Version;
+import org.apache.solr.common.SolrException;
+import org.apache.solr.common.cloud.SolrZkClient;
 import org.apache.solr.common.util.ExecutorUtil;
 import org.apache.solr.core.CoreContainer;
 import org.apache.solr.core.NodeConfig;
@@ -34,19 +37,19 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.metatype.annotations.Designate;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.FileSystem;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.regex.Pattern;
 
 
 /**
@@ -54,31 +57,19 @@ import java.util.regex.Pattern;
  * direcly with the implementation class. The solrHome is centralized, so it is uses the solrHome defined here
  */
 @Component(name = "SolrCoreContainer", immediate = true, configurationPolicy = ConfigurationPolicy.REQUIRE )
-@Designate(ocd = CoreContainerConfig.class)
+@Designate(ocd = SolrCoreContainerConfig.class)
 @Slf4j
 public class SolrCoreContainerManager {
 
     public static final String SOLR_XML = "/solr.xml";
 
-    /*
-    public static final String PROP_PROPERTIES_ATTRIBUTE = "solr.properties";
-    public static final String PROP_SOLRHOME_ATTRIBUTE = "solr.solr.home";
-    public static final String PROP_SOLR_http_CONFDIR_ATTRIBUTE = "solr.default.confdir";
-    public static final String SOLR_XML = "/solr.xml";
-    public static final int ZK_CLIENT_TIMEOUT = 30000;
-    public static final String PROP_ZK_HOST = "zkHost";
-    public static final String PROP_ZK_RUN = "zkRun";
-    public static final String PROP_EXCLUDE_PATTERNS = "excludePatterns";
-*/
-
-    private CoreContainerConfig config;
+    private SolrCoreContainerConfig config;
     private CoreContainer cores;
 
     FileSystem fs;
 
     private ServiceRegistration coreContainerRegistration;
 
-    private List<Pattern> excludePatterns;
     private HttpClient httpClient;
     protected final CountDownLatch init = new CountDownLatch(1);
 
@@ -86,6 +77,7 @@ public class SolrCoreContainerManager {
     @SuppressWarnings({"checkstyle:illegalcatch", "checkstyle:executablestatementcount", "checkstyle:methodlength",
             "checkstyle:avoidinlineconditionals"})
     public void init() {
+        // TODO: Define in OWGi context
         SSLConfigurationsFactory.current().init();
         log.trace("Solr.init(): {}", this.getClass().getClassLoader());
         CoreContainer coresInit = null;
@@ -93,20 +85,12 @@ public class SolrCoreContainerManager {
             SolrRequestParsers.fileCleaningTracker = new SolrFileCleaningTracker();
 
             logWelcomeBanner();
-
-            if (config.excludePattern() != null) {
-                String[] excludeArray = config.excludePattern().split(",");
-                excludePatterns = new ArrayList<>();
-                for (String element : excludeArray) {
-                    excludePatterns.add(Pattern.compile(element));
-                }
-            }
             try {
                 Properties extraProperties = new java.util.Properties();
 
                 ExecutorUtil.addThreadLocalProvider(SolrRequestInfo.getInheritableThreadLocalProvider());
 
-                coresInit = createCoreContainer(config.solrHome() == null ? fs.getPath("") : Paths.get(config.solrHome()),
+                coresInit = createCoreContainer(Strings.isNullOrEmpty(config.solrHome()) ? fs.getPath("") : Paths.get(config.solrHome()),
                         extraProperties);
                 this.httpClient = coresInit.getUpdateShardHandler().getHttpClient();
                 setupJvmMetrics(coresInit);
@@ -128,8 +112,9 @@ public class SolrCoreContainerManager {
 
 
     @Activate
-    protected void activate(CoreContainerConfig config, BundleContext bundleContext) throws IOException {
+    protected void activate(SolrCoreContainerConfig config, BundleContext bundleContext) throws IOException {
         fs = Jimfs.newFileSystem(Configuration.unix());
+        this.config = config;
         init();
         registerSolrServiceReference(CoreContainer.class, bundleContext, cores);
     }
@@ -137,11 +122,9 @@ public class SolrCoreContainerManager {
     @Deactivate
     @SuppressWarnings("checkstyle:illegalcatch")
     protected void deactivate() {
-        /*
-        if (isCoreContainerActive()) {
-            cores.shutdown();
-        } */
-        coreContainerRegistration.unregister();
+        if (coreContainerRegistration != null) {
+            coreContainerRegistration.unregister();
+        }
 
         try {
             FileCleaningTracker fileCleaningTracker = SolrRequestParsers.fileCleaningTracker;
@@ -229,7 +212,7 @@ public class SolrCoreContainerManager {
 
     /* We are in cloud mode if Java option zkRun exists OR zkHost exists and is non-empty */
     private boolean isCloudMode() {
-        return (!Strings.isNullOrEmpty(config.solrcloud_zkHost()) || config.zkRun());
+        return (!Strings.isNullOrEmpty(config.zkHost()) || !Strings.isNullOrEmpty(config.zkRun()));
     }
 
     /**
@@ -249,14 +232,13 @@ public class SolrCoreContainerManager {
      * @return the NodeConfig
      */
     @SuppressWarnings("checkstyle:illegalcatch")
-    public static NodeConfig loadNodeConfig(Path solrHome, java.util.Properties nodeProperties) {
+    public NodeConfig loadNodeConfig(Path solrHome, java.util.Properties nodeProperties) {
 
         SolrResourceLoader loader = new SolrResourceLoader(solrHome, SolrCoreContainerManager.class.getClassLoader(), nodeProperties);
 
-        /*
-        String zkHost = System.getProperty(PROP_ZK_HOST);
-        if (!StringUtils.isEmpty(zkHost)) {
-            try (SolrZkClient zkClient = new SolrZkClient(zkHost, ZK_CLIENT_TIMEOUT)) {
+        String zkHost = config.zkHost();
+        if (!Strings.isNullOrEmpty(zkHost)) {
+            try (SolrZkClient zkClient = new SolrZkClient(zkHost, config.zkClientTimeout())) {
                 if (zkClient.exists(SOLR_XML, true)) {
                     log.info("solr.xml found in ZooKeeper. Loading...");
                     byte[] data = zkClient.getData(SOLR_XML, null, null, true);
@@ -266,12 +248,21 @@ public class SolrCoreContainerManager {
                 throw new SolrException(SolrException.ErrorCode.SERVER_ERROR, "Error occurred while loading solr.xml from zookeeper", e);
             }
             log.info("Loading solr.xml from SolrHome (not found in ZooKeeper)");
-        } */
+        }
+        // Using the templated version
+        Path solrXml = loader.getInstancePath().resolve(SolrXmlConfig.SOLR_XML_FILE);
+        String solrConfig = SolrXmlGenerator.getSolrXml(config);
+        log.info("Solr config used: \n" + solrConfig);
+        try {
+            Files.createDirectories(solrXml.getParent());
+            Files.write(solrXml, solrConfig.getBytes(Charsets.UTF_8), StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            log.error("Could not create directories: " + solrXml.getParent().toString());
+        }
         return SolrXmlConfig.fromSolrHome(loader, loader.getInstancePath());
     }
 
-    public CoreContainer getCores() {
+     public CoreContainer getCores() {
         return cores;
     }
-
 }
