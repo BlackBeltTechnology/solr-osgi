@@ -18,6 +18,9 @@
         <bundle start-level="20">mvn:org.json/json/20170516</bundle>
     </feature>
 
+    <feature name="jsr305" version="1.1.0" description="JSR 305">
+        <bundle start-level="20">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsr305/3.0.2_1</bundle>
+    </feature>
 
     <feature name="javax-transaction-api" version="1.2" description="Java Transaction APi 1.2">
         <feature>javax-cdi-api</feature>
@@ -184,6 +187,7 @@
         <feature>guava</feature>
         <feature>apache-httpclient</feature>
         <feature>dropwizard-metrics</feature>
+        <feature>jsr305</feature>
 
         <bundle start-level="35">mvn:com.google.jimfs/jimfs/1.1</bundle>
         <bundle start-level="40">mvn:com.github.ben-manes.caffeine/caffeine/2.5.6</bundle>
@@ -196,10 +200,33 @@
 
     </feature>
 
+    <feature name="javassist" version="3.20.0-GA" description="Javassists">
+        <bundle start-level="20">mvn:org.javassist/javassist/3.20.0-GA</bundle>
+    </feature>
+
+
+    <feature name="reflections" version="0.9.9" description="Reflections">
+        <feature dependency="true">wrap</feature>
+        <feature>javassist</feature>
+        <feature>guava</feature>
+        <bundle start-level="20"><![CDATA[wrap:mvn:org.reflections/reflections/0.9.9$Bundle-Name=Reflections&Bundle-SymbolicName=org.reflections&Bundle-Version=0.9.9&Import-Package=com.google.gson;resolution:=optional, javax.servlet;resolution:=optional,org.apache.commons.vfs2;resolution:=optional,org.gjt.xpp;resolution:=optional,org.xmlpull.v1;resolution:=optional,org.relaxng.datatype;resolution:=optional, org.dom4j.*;resolution:=optional,com.google.common.*;version=18,*]]></bundle>
+        <!-- TODO: slf4j 1.6.1 -->
+    </feature>
+
+    <feature name="osgi-utils" version="1.0.0" description="Blackbelt OSGi utils">
+        <feature>javassist</feature>
+        <feature>reflections</feature>
+        <feature>guava</feature>
+        <feature>scr</feature>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/lang/1.0.0-develop-5</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.0-develop-5</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.0-develop-5</bundle>
+    </feature>
 
     <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">
         <feature>scr</feature>
         <feature>solr</feature>
+        <feature>osgi-utils</feature>
         <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-services/${project.version}</bundle>
     </feature>
 

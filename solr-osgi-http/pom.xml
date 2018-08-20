@@ -29,6 +29,7 @@
                             com.google.common.primitives;version="[14.0,30)",
                             com.google.common.hash;version="[14.0,30)",
                             com.google.common.util.concurrent;version="[14.0,30)",
+                            javax.annotation;version="[1.0,2)",
                             *
                         </Import-Package>
                     </instructions>

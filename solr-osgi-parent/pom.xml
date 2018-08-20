@@ -81,6 +81,8 @@
 
         <solr-version>7.0.1</solr-version>
 
+        <osgi-util-version>1.0.0-develop-5</osgi-util-version>
+
     </properties>
 
     <dependencies>

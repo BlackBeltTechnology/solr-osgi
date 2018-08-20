@@ -80,7 +80,11 @@
                                 <feature>velocity</feature>
                                 <feature>icu4j</feature>
                                 <feature>dropwizard-metrics</feature>
+                                <feature>jsr305</feature>
                                 <feature>lucene</feature>
+                                <feature>javassist</feature>
+                                <feature>reflections</feature>
+                                <feature>osgi-utils</feature>
                                 <feature>solr</feature>
                                 <feature>solr-services</feature>
                                 <feature>solr-http</feature>
