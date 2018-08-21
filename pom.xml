@@ -10,6 +10,7 @@
 
     <modules>
         <module>solr-osgi-parent</module>
+        <module>solr-osgi-example-configsets-exampleCollection</module>
         <module>solr-osgi-services</module>
         <module>solr-osgi-http</module>
         <module>solr-osgi-feature</module>

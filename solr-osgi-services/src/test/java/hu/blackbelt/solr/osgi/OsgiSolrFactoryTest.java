@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Slf4j
 public class OsgiSolrFactoryTest {
 
-    static final String CONFIGSET_DIR = "src/test/resources/configsets";
+    static final String CONFIGSET_DIR = "target/configsets";
 
     static SolrClient solrClient1;
     static SolrClient solrClient2;
@@ -65,6 +65,8 @@ public class OsgiSolrFactoryTest {
         try {
             String targetLocation = OsgiSolrFactory.class
                     .getProtectionDomain().getCodeSource().getLocation().getFile() + "/..";
+
+            log.info(targetLocation.toString());
 
             String solrHome = targetLocation + "/solr";
 
@@ -100,7 +102,7 @@ public class OsgiSolrFactoryTest {
 
             solrClient1 = OsgiSolrFactory.createServer(coreContainer, "exampleCollection", "test-1", params);
             solrClient2 = OsgiSolrFactory.createServer(coreContainer, "exampleCollection", "test-2", params);
-            
+
             // create some test documents
             SolrInputDocument doc1 = new SolrInputDocument();
             doc1.addField("id", "1");
