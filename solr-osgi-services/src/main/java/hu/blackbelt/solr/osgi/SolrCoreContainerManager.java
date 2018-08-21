@@ -3,6 +3,7 @@ package hu.blackbelt.solr.osgi;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.google.common.io.ByteStreams;
 import com.google.common.jimfs.Jimfs;
 import hu.blackbelt.osgi.utils.osgi.api.BundleCallback;
 import hu.blackbelt.osgi.utils.osgi.api.BundleTrackerManager;
@@ -30,9 +31,13 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystem;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
@@ -40,6 +45,8 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+
+import static com.google.common.collect.Iterators.forEnumeration;
 
 
 /**
@@ -55,6 +62,8 @@ public class SolrCoreContainerManager {
     static final String SOLR_CORE_CONFIGURATION_PID = "solr.core";
     static final String CONFIGURATION_CONFIGSET = "configSet";
     static final String CONFIGURATION_NAME = "name";
+    static final String CONFIGSETS = "configsets";
+    static final String SLASH = "/";
 
     private static final Predicate<Bundle> IS_SOLRCCONFIGSET = new Predicate<Bundle>() {
         @Override
@@ -91,7 +100,7 @@ public class SolrCoreContainerManager {
             logWelcomeBanner();
             try {
                 coreFileSystem = Jimfs.newFileSystem(com.google.common.jimfs.Configuration.unix());
-                coreContainer = OsgiSolrFactory.createCoreContainer(config, coreFileSystem.getPath(""));
+                coreContainer = OsgiSolrFactory.createCoreContainer(config, coreFileSystem.getPath("/"));
                 ExecutorUtil.addThreadLocalProvider(SolrRequestInfo.getInheritableThreadLocalProvider());
                 log.debug("user.dir=" + System.getProperty("user.dir"));
             } catch (Exception e) {
@@ -211,7 +220,21 @@ public class SolrCoreContainerManager {
                 log.info("Solr content found in bundle " + bundle.getSymbolicName() + " Registering");
                 try {
                     // Copy content from path
-                    loadedConfigSet.remove(configSetName);
+                    forEnumeration(bundle.findEntries(CONFIGSETS + SLASH + configSetName, "*", true)).forEachRemaining(url -> {
+                        if (!url.toString().endsWith(SLASH)) {
+                            java.net.URL url1;
+                            try {
+                                String relPath = SLASH + makePathRelative(configSetName, url.getPath());
+                                log.info("Copy file " + url.toString() + " to " + relPath);
+                                Path to = coreFileSystem.getPath(relPath);
+                                Files.createDirectories(to.getParent());
+                                ByteStreams.copy(url.openStream(), Files.newOutputStream(to));
+                            } catch (Exception e) {
+                                log.info("Could not copy file: " + url.toString());
+                            }
+                        }
+                    });
+                    loadedConfigSet.add(configSetName);
                     refreshCores();
                 } catch (Exception e) {
                     log.warn(String.format("Could not load content from bundle: %s in path: %s ",
@@ -235,6 +258,12 @@ public class SolrCoreContainerManager {
                 try {
                     // Remove from path
                     loadedConfigSet.remove(configSetName);
+                    Files.walk(coreFileSystem.getPath(CONFIGSETS + SLASH + configSetName))
+                            .sorted(Comparator.reverseOrder())
+                            .map(Path::toFile)
+                            .peek(f -> log.info("Deleting file: " + f.toString()))
+                            .forEach(File::delete);
+
                     refreshCores();
                 } catch (Exception e) {
                     log.warn(String.format("Could not load content from bundle: %s in path: %s ",
@@ -369,5 +398,22 @@ public class SolrCoreContainerManager {
                 .forEach(c -> log.warn("Could not start core, because configSet is not loaded: " + c.getValue().toString()));
     }
 
+
+    /**
+     * Making path relative
+     * @param relativePath
+     * @param path
+     * @return
+     */
+    private String makePathRelative(String relativePath, String path) {
+        path = path.replaceAll("//", SLASH);
+        if (path.startsWith(SLASH))
+            path =  path.substring(1);
+
+        if (path.startsWith(relativePath)) {
+            path = path.substring(relativePath.length());
+        }
+        return path;
+    }
 
 }

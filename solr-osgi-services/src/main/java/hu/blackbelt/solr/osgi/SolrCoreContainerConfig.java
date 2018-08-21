@@ -113,7 +113,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "Config Set Base Dir",
             description = "The directory under which configsets for Solr cores can be found. Defaults to $SOLR_HOME/configsets."
     )
-    String configSetBaseDir() default "";
+    String configSetBaseDir() default "configsets";
 
 
     /*
