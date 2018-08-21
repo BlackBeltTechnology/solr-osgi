@@ -197,30 +197,13 @@
         <bundle start-level="40">mvn:hu.blackbelt.bundles.solr/org.apache.solr/7.0.1_1</bundle>
         <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle>
         <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
-
-    </feature>
-
-    <feature name="javassist" version="3.20.0-GA" description="Javassists">
-        <bundle start-level="20">mvn:org.javassist/javassist/3.20.0-GA</bundle>
-    </feature>
-
-
-    <feature name="reflections" version="0.9.9" description="Reflections">
-        <feature dependency="true">wrap</feature>
-        <feature>javassist</feature>
-        <feature>guava</feature>
-        <bundle start-level="20"><![CDATA[wrap:mvn:org.reflections/reflections/0.9.9$Bundle-Name=Reflections&Bundle-SymbolicName=org.reflections&Bundle-Version=0.9.9&Import-Package=com.google.gson;resolution:=optional, javax.servlet;resolution:=optional,org.apache.commons.vfs2;resolution:=optional,org.gjt.xpp;resolution:=optional,org.xmlpull.v1;resolution:=optional,org.relaxng.datatype;resolution:=optional, org.dom4j.*;resolution:=optional,com.google.common.*;version=18,*]]></bundle>
-        <!-- TODO: slf4j 1.6.1 -->
     </feature>
 
     <feature name="osgi-utils" version="1.0.0" description="Blackbelt OSGi utils">
-        <feature>javassist</feature>
-        <feature>reflections</feature>
         <feature>guava</feature>
         <feature>scr</feature>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/lang/1.0.0-develop-5</bundle>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.0-develop-5</bundle>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.0-develop-5</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.0-develop-7</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.0-develop-7</bundle>
     </feature>
 
     <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">
