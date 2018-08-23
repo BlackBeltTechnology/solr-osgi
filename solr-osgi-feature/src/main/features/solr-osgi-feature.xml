@@ -72,7 +72,7 @@
         <feature>javax-transaction-api</feature>
         <bundle start-level="20">mvn:commons-beanutils/commons-beanutils/1.9.2</bundle>
         <bundle start-level="20">mvn:commons-collections/commons-collections/3.2.2</bundle>
-        <bundle start-level="20">mvn:commons-io/commons-io/2.4</bundle>
+        <bundle start-level="20">mvn:commons-io/commons-io/2.6</bundle>
         <bundle start-level="20">mvn:commons-pool/commons-pool/1.6</bundle>
         <bundle start-level="20">mvn:org.apache.commons/commons-pool2/2.4.1</bundle>
         <bundle start-level="20">mvn:org.apache.commons/commons-dbcp2/2.1.1</bundle>
@@ -143,15 +143,15 @@
     </feature>
 
     <feature install= "false" name="lucene" version="7.0.1" description="Apache Lucene">
-        <feature>scr</feature>
+        <feature dependency="true">scr</feature>
         <feature>http</feature>
         <feature>cxf-jackson</feature>
         <feature>icu4j</feature>
         <feature>antlr4</feature>
         <feature>apache-commons</feature>
-        <feature>cxf-jackson</feature>
         <bundle start-level="35">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-smile/2.9.1</bundle>
         <bundle start-level="35">mvn:org.locationtech.spatial4j/spatial4j/0.6</bundle>
+<!--
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-misc/7.0.1_1</bundle>
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-core/7.0.1_1</bundle>
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-common/7.0.1_1</bundle>
@@ -173,7 +173,8 @@
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-kuromoji/7.0.1_1</bundle>
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-classification/7.0.1_1</bundle>
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial3d/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial-extras/7.0.1_1</bundle>
+        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial-extras/7.0.1_1</bundle> -->
+        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_1</bundle>
     </feature>
     <!-- <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.spatial4j/0.5_1</bundle> -->
 

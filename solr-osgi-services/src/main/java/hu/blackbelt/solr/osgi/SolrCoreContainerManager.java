@@ -92,7 +92,7 @@ public class SolrCoreContainerManager {
 
     @SuppressWarnings({"checkstyle:illegalcatch", "checkstyle:executablestatementcount", "checkstyle:methodlength",
             "checkstyle:avoidinlineconditionals"})
-    public void init() throws Exception {
+    public void init(SolrCoreContainerConfig config) throws Exception {
         SSLConfigurationsFactory.current().init();
         log.trace("Solr.init(): {}", this.getClass().getClassLoader());
         try {
@@ -120,7 +120,7 @@ public class SolrCoreContainerManager {
     protected void activate(SolrCoreContainerConfig config, BundleContext bundleContext) throws Exception {
         this.config = config;
         try {
-            init();
+            init(config);
             coreContainerRegistration = registerSolrServiceReference(CoreContainer.class, bundleContext, coreContainer);
 
             bundleTrackerManager.registerBundleCallback("solrConfigSetTracker-" + this.toString(),

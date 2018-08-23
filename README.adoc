@@ -94,7 +94,7 @@ The configSet files processed and copied to in-memory store.
 
 To load a core create a configuration with PID _solr.core_
 
-In karaf create a file solr.core-test1.cfg in karaf/deploy with the followinf content:
+In karaf create a file solr.core-test1.cfg in karaf/deploy with the following content:
 
 ----
 name=test1
@@ -102,7 +102,17 @@ configSet=exampleCollection
 ----
 
 ## HTTP access
-TODO
+To install HTTP service create configuration with PID _solr.http_
+
+In karaf create a file solr.http.cfg in karaf/deploy with the following content:
+
+----
+contextRoot=/solr
+----
+
+
+After the Solr Admin can be accessed http://localhost:8181/solr/index.html#/
+
 
 
 ## Core container parameters

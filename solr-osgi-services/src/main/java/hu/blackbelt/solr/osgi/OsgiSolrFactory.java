@@ -120,8 +120,8 @@ public class OsgiSolrFactory {
     public static CoreContainer createCoreContainer(final SolrCoreContainerConfig solrCoreContainerConfig, final Path solrInstancePath)
             throws IOException, SolrServerException {
 
+        final SolrResourceLoader loader = new SolrResourceLoader(solrInstancePath);
 
-        final SolrResourceLoader loader = new OsgiSolrResourceLoader(solrInstancePath);
         NodeConfig config = SolrXmlConfig.fromString(loader, SolrXmlGenerator.getSolrXml(solrCoreContainerConfig));
         CoreContainer coreContainer = new CoreContainer(config, new Properties(), new CorePropertiesLocator(config.getCoreRootDirectory()), true);
         coreContainer.load();
@@ -129,7 +129,7 @@ public class OsgiSolrFactory {
         // Hack: To be able to control resourcec loading have to replace core container's configset loader implementation.
         // It is mandatory to be able to use osgi compliant resource loader.
         // TODO: Change the behaviour to work with Zookeper's clustered instances
-        ConfigSetService configSetService = new OsgiConfigSetService(new OsgiSolrResourceLoader(solrInstancePath), solrInstancePath.resolve(solrCoreContainerConfig.configSetBaseDir()));
+        ConfigSetService configSetService = new OsgiConfigSetService(new SolrResourceLoader(solrInstancePath), solrInstancePath.resolve(solrCoreContainerConfig.configSetBaseDir()));
         try {
             FieldUtils.writeField(coreContainer, "coreConfigService", configSetService,  true);
             FieldUtils.writeField(coreContainer, "solrHome", solrCoreContainerConfig.solrHome(),  true);
