@@ -151,32 +151,8 @@
         <feature>apache-commons</feature>
         <bundle start-level="35">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-smile/2.9.1</bundle>
         <bundle start-level="35">mvn:org.locationtech.spatial4j/spatial4j/0.6</bundle>
-<!--
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-misc/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-core/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-common/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-icu/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-phonetic/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-stempel/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-queries/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-grouping/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-memory/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-join/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-highlighter/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-queryparser/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-suggest/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-facet/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-expressions/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-codecs/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-smartcn/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-kuromoji/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-classification/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial3d/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial-extras/7.0.1_1</bundle> -->
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_1</bundle>
     </feature>
-    <!-- <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.spatial4j/0.5_1</bundle> -->
 
     <feature install= "false" name="solr" version="7.0.1" description="Apache Solr">
         <feature>apache-xerces</feature>
@@ -203,8 +179,8 @@
     <feature name="osgi-utils" version="1.0.0" description="Blackbelt OSGi utils">
         <feature>guava</feature>
         <feature>scr</feature>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.0-develop-7</bundle>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.0-develop-7</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.0_develop-11</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.0_develop-11</bundle>
     </feature>
 
     <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">

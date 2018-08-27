@@ -361,7 +361,8 @@ public class SolrCoreContainerManager {
                 startedCoreConfigurations.remove(configurationInfo.getConfigurationPid());
                 log.info("Stopping core: " + configurationInfo.toString());
                 try {
-                    coreContainer.getCore(PropertiesUtil.toString(configurationInfo.getProperties().get(CONFIGURATION_NAME), null)).close();
+                    OsgiSolrFactory.stopServer(coreContainer,
+                            PropertiesUtil.toString(configurationInfo.getProperties().get(CONFIGURATION_NAME), null));
                 } catch (Exception e) {
                     log.error("Coukd not start core: " + configurationInfo.toString());
                 }

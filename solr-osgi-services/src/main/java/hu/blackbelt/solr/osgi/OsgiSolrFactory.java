@@ -94,6 +94,29 @@ public class OsgiSolrFactory {
         return embeddedSolrServer;
     }
 
+    /**
+     * Unload Solr core.
+     *
+     * @param coreName the name of the core, it have to be exists.
+
+     * @return an EmbeddedSolrServer with a core created for the given coreName
+     * @throws IOException
+
+
+     */
+    public static SolrClient stopServer(final CoreContainer coreContainer, final String coreName)
+            throws IOException, SolrServerException {
+
+        EmbeddedSolrServer embeddedSolrServer = new EmbeddedSolrServer(coreContainer, coreName);
+
+        /* The SolrJ Create does not have way to give parameters to core */
+        final CoreAdminRequest.Unload unloadRequest = new CoreAdminRequest.Unload(false);
+        unloadRequest.setCoreName(coreName);
+        embeddedSolrServer.request(unloadRequest);
+
+        return embeddedSolrServer;
+    }
+
 
 
     /**
