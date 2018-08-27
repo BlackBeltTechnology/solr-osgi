@@ -149,6 +149,7 @@
         <feature>icu4j</feature>
         <feature>antlr4</feature>
         <feature>apache-commons</feature>
+        <bundle start-level="20">mvn:org.ow2.asm/asm-all/5.2</bundle>
         <bundle start-level="35">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-smile/2.9.1</bundle>
         <bundle start-level="35">mvn:org.locationtech.spatial4j/spatial4j/0.6</bundle>
         <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_1</bundle>
