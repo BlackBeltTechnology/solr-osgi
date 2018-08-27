@@ -1,0 +1,16 @@
+ # Mysql DataImport example on Northwind database
+
+ 
+ # Setup database
+
+Loading preconfigured northwind database.
+
+----
+docker run --name northwind -e MYSQL_ROOT_PASSWORD=northwind -p 3306:3306 bylek/northwind-mysql
+----
+
+# Setup kara datasource
+
+
+# Setup core
+
