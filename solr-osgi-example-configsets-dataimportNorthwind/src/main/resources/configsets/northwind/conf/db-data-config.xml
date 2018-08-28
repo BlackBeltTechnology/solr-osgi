@@ -1,0 +1,10 @@
+<dataConfig>
+    <dataSource jndiName="${dataimporter.request.jndiName}"/>
+    <document>
+        <!-- To make delta qyery add a last_update field and extend the where clause with: OR last_update > str_to_date('${dataimporter.last_index_time}', '%Y-%m-%d %H:%i:%S') -->
+        <entity name="product"
+                query="SELECT id, product_code, product_name from products WHERE '${dataimporter.request.clean}' != 'false' ">
+        </entity>
+    </document>
+</dataConfig>
+
