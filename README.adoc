@@ -4,20 +4,20 @@ This project goal is to be able to run Apache Solr in OSGi environment and bring
 
 [NOTE]
 ====
-There is no all of the Solr features supported yet, clustering and sharding haven't been tested. In theory every piece of feature can be implemented. Now only configSet based cores can be used.
+There is no all of the Solr features supported yet, clustering and sharding haven't been tested. In theory every piece of feature can be implemented in the future. Cellar based SolCloud implementation is planned. Now only configSet based cores can be used.
 ====
 
 ## How it works?
 
 There are a declarative component called SolrCoreContainerManager which monitors the following items:
 
-* solr.core or solr.core-<pid> configuration PID-s in ConfigurationAdmin service. This configuration defines a core cofigurations. The preoperties are very same as can be used in CoreAdmin API. The solr cores uses the defined 
+* *solr.core* or *solr.core-<pid>* configuration PID-s in ConfigurationAdmin service. This configuration defines a core cofigurations. The properties are very same as can be used in CoreAdmin API. Custom properties can be defined in admin-requests, 'property' prefix can be used on custom properties. Two mandatory properties are: name and configSet. 
 
-* All bundles which have the Solr-Configset. It loades configSets to CoreContainer. The cores can use thats configSets. The configSets are stored to an in-Memory filesystem which is used to load files by solr. 
+* All bundles which have the Solr-Configset tag in *META-INF/MANIFEST.MF*. It loades configSets to CoreContainer. The cores can use thats configSets as a template. The configSets are stored to an in-Memory filesystem which is used to load files by solr. 
 
-The manager creates SolrClient instances when the configSet loaded which referenced by solr.core confugurations. In the future the core definitions which does not have configSet can be created as normal cores, but for that some file based resurce management implementation is required.
+The manager creates SolrClient instances when the configSet loaded which referenced by solr.core confugurations. In the future the core definitions which does not have configSet can be created as normal cores, but for that some file based resource management implementation is required.
 
-When a core config or configSet bundle removed the relared solrClients are stoping.
+When a core config or configSet bundle removed the related solrClients are stopping. The data directory is not removed, so it can be reused later.
 
 ## Installation and usage
 
@@ -31,13 +31,13 @@ feature:repo-add mvn:hu.blackbelt/solr-osgi-feature/<version>/xml/features
 feature:install -v solr-http
 ----
 
-To be able to use the SolrCoreContainerManager's functionality have to create a configuratio with pid _solr.corecontainer_ 
+To be able to use the SolrCoreContainerManager's functionality have to create a configuration with pid *solr.corecontainer* 
 
-In karaf create a file solr.corecontainer.cfg in karaf/deploy with the followinf content:
+Create a file *solr.corecontainer.cfg* in *karaf/deploy* with the following content:
 
----
+----
 solrHome=/tmp/solr
----
+----
 
 ----
 karaf@root()> log:tail
@@ -75,7 +75,7 @@ karaf@root()> log:tail
 ----
 
 
-To add a configSet template, copy the *solr-osgi-example-configsets-exampleCollection* projects jar to _karaf/deploy_
+To add a configSet template, copy the *solr-osgi-example-configsets-exampleCollection* projects jar to *karaf/deploy*
 
 ----
 2018-08-22 00:33:04,850 | INFO  | tures-1-thread-1 | SolrCoreContainerManager         | 76 - hu.blackbelt.solr-osgi-services - 1.0.0.SNAPSHOT | Solr content found in bundle hu.blackbelt.solr-osgi-example-configsets-exampleCollection Registering
@@ -92,9 +92,9 @@ To add a configSet template, copy the *solr-osgi-example-configsets-exampleColle
 The configSet files processed and copied to in-memory store.
 
 
-To load a core create a configuration with PID _solr.core_
+To create a core based on a configSet, create a configuration with PID *solr.core-<pid>*
 
-In karaf create a file solr.core-test1.cfg in karaf/deploy with the following content:
+In karaf create a file *solr.core-test1.cfg* in *karaf/deploy* with the following content:
 
 ----
 name=test1
@@ -102,18 +102,18 @@ configSet=exampleCollection
 ----
 
 ## HTTP access
-To install HTTP service create configuration with PID _solr.http_
+To install HTTP service create configuration with PID *solr.http*
 
-In karaf create a file solr.http.cfg in karaf/deploy with the following content:
+In karaf create a file *solr.http.cfg* in *karaf/deploy* with the following content:
 
 ----
 contextRoot=/solr
 ----
 
 
-After the Solr Admin can be accessed http://localhost:8181/solr/index.html#/
-
+After the Solr Admin can be accessed http://localhost:8181/solr/
 
 
 ## Core container parameters
-TODO
+
+Core containers have very same parameters as the original ones, but not all of them can be used now.
