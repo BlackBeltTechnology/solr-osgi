@@ -35,9 +35,8 @@
             <str name="config">db-data-config.xml</str>
         </lst>
         <lst name="invariants">
-            <str name="jndiName">${jndiName:osgi:service/javax.sql.DataSource/(osgi.jndi.service.name=northwind)}</str>
-        </lst>
-        <propertyWriter dateFormat="yyyy-MM-dd HH:mm:ss" type="SimplePropertiesWriter" directory="${solr.core.dataDir}" filename="dataimport.properties" locale="en_US" />
+            <str name="jndiName">${jndiName}</str>
+s        </lst>
     </requestHandler>
     
     <requestHandler name="/select" class="solr.SearchHandler">

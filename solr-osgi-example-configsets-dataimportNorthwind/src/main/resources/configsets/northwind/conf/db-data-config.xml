@@ -1,5 +1,11 @@
 <dataConfig>
-    <dataSource jndiName="${dataimporter.request.jndiName}"/>
+    <propertyWriter
+            dateFormat="yyyy-MM-dd HH:mm:ss"
+            type="SimplePropertiesWriter"
+            directory="data"
+            filename="dataimport.properties"/>
+
+    <dataSource jndiName="osgi:service/javax.sql.DataSource/(osgi.jndi.service.name=${dataimporter.request.jndiName})"/>
     <document>
         <!-- To make delta qyery add a last_update field and extend the where clause with: OR last_update > str_to_date('${dataimporter.last_index_time}', '%Y-%m-%d %H:%i:%S') -->
         <entity name="product"
