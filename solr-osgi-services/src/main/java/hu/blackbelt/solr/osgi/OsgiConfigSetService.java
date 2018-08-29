@@ -33,7 +33,7 @@ public class OsgiConfigSetService extends ConfigSetService {
     @Override
     public SolrResourceLoader createCoreResourceLoader(CoreDescriptor cd) {
         Path instanceDir = locateInstanceDir(cd);
-        return new SolrResourceLoader(instanceDir);
+        return new SolrResourceLoader(instanceDir, parentLoader.getClassLoader(), cd.getSubstitutableProperties());
     }
 
     @Override
