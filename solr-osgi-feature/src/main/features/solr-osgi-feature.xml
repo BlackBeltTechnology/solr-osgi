@@ -152,7 +152,7 @@
         <bundle start-level="20">mvn:org.ow2.asm/asm-all/5.2</bundle>
         <bundle start-level="35">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-smile/2.9.1</bundle>
         <bundle start-level="35">mvn:org.locationtech.spatial4j/spatial4j/0.6</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_1</bundle>
+        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_2</bundle>
     </feature>
 
     <feature install= "false" name="solr" version="7.0.1" description="Apache Solr">
@@ -177,11 +177,11 @@
         <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
     </feature>
 
-    <feature name="osgi-utils" version="1.0.0" description="Blackbelt OSGi utils">
+    <feature name="osgi-utils" version="1.0.1" description="Blackbelt OSGi utils">
         <feature>guava</feature>
         <feature>scr</feature>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.0_develop-11</bundle>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.0_develop-11</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.1</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.1</bundle>
     </feature>
 
     <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">
