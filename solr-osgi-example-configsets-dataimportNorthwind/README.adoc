@@ -1,5 +1,7 @@
 # Mysql DataImport example on Northwind database
 
+Setup solr-osgi as described in the base readme.
+
 # Setup database
 
 Loading preconfigured northwind database.
@@ -8,7 +10,7 @@ Loading preconfigured northwind database.
 docker run --name northwind -e MYSQL_ROOT_PASSWORD=northwind -p 3306:3306 bylek/northwind-mysql
 ----
 
-# Setup kara datasource
+# Setup karaf datasource
 
 ## Install JDBC Driver
 
@@ -102,4 +104,13 @@ northwind | suppliers                   |                           |           
 
 
 # Setup core
+
+Put solr.core-northwind1.cfg
+
+----
+name=northwind1
+configSet=northwind
+property.jndiName=northwind
+----
+
 
