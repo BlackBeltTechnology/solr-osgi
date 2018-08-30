@@ -20,3 +20,8 @@ nb*.xml
 # IntelliJ IDEA files
 .idea
 **/*.iml
+
+.wercker
+
+wercker.env
+
