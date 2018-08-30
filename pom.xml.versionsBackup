@@ -3,7 +3,7 @@
     
     <groupId>hu.blackbelt</groupId>
     <artifactId>solr-osgi</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     
     <name>Solr OSGi</name>
