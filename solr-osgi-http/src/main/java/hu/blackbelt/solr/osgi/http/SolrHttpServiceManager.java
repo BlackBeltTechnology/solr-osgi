@@ -21,7 +21,7 @@ import javax.servlet.Servlet;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-@Component(name = "SolrHttp", immediate = true, configurationPolicy = ConfigurationPolicy.REQUIRE )
+@Component(name = "solr.http", immediate = true, configurationPolicy = ConfigurationPolicy.REQUIRE )
 @Designate(ocd = SolrHttpConfig.class)
 @Slf4j
 public class SolrHttpServiceManager {

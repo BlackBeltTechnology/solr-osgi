@@ -17,11 +17,9 @@ import java.util.regex.Pattern;
 
 public class SolrOsgiDispatchFilter extends SolrDispatchFilter implements Filter {
 
-    final CoreContainer coreContainer;
     private ArrayList<Pattern> excludePatterns;
 
     public SolrOsgiDispatchFilter(CoreContainer coreContainer, String exclude) {
-        this.coreContainer = coreContainer;
         super.cores = coreContainer;
 
         if(exclude != null) {

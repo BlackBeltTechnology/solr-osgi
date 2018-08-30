@@ -1,0 +1,119 @@
+# Mysql DataImport example on Northwind database
+
+Setup solr-osgi as described in the base readme.
+
+# Setup database
+
+Loading preconfigured northwind database.
+
+----
+docker run --name northwind -e MYSQL_ROOT_PASSWORD=northwind -p 3306:3306 bylek/northwind-mysql
+----
+
+# Setup karaf datasource
+
+## Install JDBC Driver
+
+feature:install pax-jdbc-config pax-jdbc-mysql
+
+## Install JNDI access 
+
+feature:install jndi
+
+## Add datasource
+
+Create file at Karaf deploy named /org.ops4j.datasource-northwind.cfg
+
+----
+osgi.jdbc.driver.name=mysql
+databaseName=northwind
+user=root
+password=northwind
+dataSourceName=northwind
+----
+
+## Test
+
+----
+karaf@root()> service:list DataSourceFactory                                                                                                                                                                                                                                
+[org.osgi.service.jdbc.DataSourceFactory]
+-----------------------------------------
+ osgi.jdbc.driver.class = com.mysql.jdbc.Driver
+ osgi.jdbc.driver.name = mysql
+ service.bundleid = 53
+ service.id = 173
+ service.scope = singleton
+Provided by : 
+ OPS4J Pax JDBC MySQL Driver Adapter (53)
+Used by: 
+ OPS4J Pax JDBC Config (105)
+
+
+karaf@root()> service:list DataSource                                                                                                                                                                                                                                       
+[javax.sql.DataSource]
+----------------------
+ databaseName = northwind
+ dataSourceName = northwind
+ felix.fileinstall.filename = file:/Project/apache-karaf-4.1.2/deploy/org.ops4j.datasource-northwind.cfg
+ osgi.jdbc.driver.name = mysql
+ osgi.jndi.service.name = northwind
+ password = northwind
+ service.bundleid = 105
+ service.factoryPid = org.ops4j.datasource
+ service.id = 195
+ service.pid = org.ops4j.datasource.ef927fe3-1523-44b6-b738-736a3c4ec583
+ service.scope = singleton
+ user = root
+Provided by : 
+ OPS4J Pax JDBC Config (105)
+
+
+karaf@root()> feature:install jdbc 
+
+karaf@root()> jdbc:ds-list 
+Name      | Product | Version | URL                          | Status
+----------+---------+---------+------------------------------+-------
+northwind | MySQL   | 5.7.20  | jdbc:mysql://:3306/northwind | OK
+
+
+karaf@root()> jdbc:tables northwind
+TABLE_CAT | TABLE_NAME                  | SELF_REFERENCING_COL_NAME | TABLE_SCHEM | TYPE_SCHEM | TYPE_CAT | TABLE_TYPE | REMARKS | REF_GENERATION | TYPE_NAME
+----------+-----------------------------+---------------------------+-------------+------------+----------+------------+---------+----------------+----------
+northwind | customers                   |                           |             |            |          | TABLE      |         |                |
+northwind | employee_privileges         |                           |             |            |          | TABLE      |         |                |
+northwind | employees                   |                           |             |            |          | TABLE      |         |                |
+northwind | inventory_transaction_types |                           |             |            |          | TABLE      |         |                |
+northwind | inventory_transactions      |                           |             |            |          | TABLE      |         |                |
+northwind | invoices                    |                           |             |            |          | TABLE      |         |                |
+northwind | order_details               |                           |             |            |          | TABLE      |         |                |
+northwind | order_details_status        |                           |             |            |          | TABLE      |         |                |
+northwind | orders                      |                           |             |            |          | TABLE      |         |                |
+northwind | orders_status               |                           |             |            |          | TABLE      |         |                |
+northwind | orders_tax_status           |                           |             |            |          | TABLE      |         |                |
+northwind | privileges                  |                           |             |            |          | TABLE      |         |                |
+northwind | products                    |                           |             |            |          | TABLE      |         |                |
+northwind | purchase_order_details      |                           |             |            |          | TABLE      |         |                |
+northwind | purchase_order_status       |                           |             |            |          | TABLE      |         |                |
+northwind | purchase_orders             |                           |             |            |          | TABLE      |         |                |
+northwind | sales_reports               |                           |             |            |          | TABLE      |         |                |
+northwind | shippers                    |                           |             |            |          | TABLE      |         |                |
+northwind | strings                     |                           |             |            |          | TABLE      |         |                |
+northwind | suppliers                   |                           |             |            |          | TABLE      |         |                |
+
+----
+
+
+# Setup core
+
+To add configSet template, copy the *solr-osgi-example-configsets-dataimportNorthwind* projects jar to *karaf/deploy*. Also put solr.core-northwind1.cfg to *karaf/deploy* to enable Northwind core.
+
+----
+name=northwind1
+configSet=northwind
+property.jndiName=northwind
+----
+
+
+# Test configuration
+
+Go to Solr Admin console (http://localhost:8181/solr/), select *northwind1* core and execute *Dataimport* with default settings. You can see number of imported documents (45) on Overview page.

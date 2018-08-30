@@ -6,18 +6,27 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 @ObjectClassDefinition(name="Solr container manager")
 @interface SolrCoreContainerConfig {
 
+    @AttributeDefinition(
+            name = "Node name",
+            description = "The name of the node"
+    )
+    String nodeName() default "osgiEmbeddedSolr";
+
     /* Environmental parameters */
     @AttributeDefinition(
             name = "Solr Home",
             description = "The solr  directory which contains solr base files"
     )
-    String solrHome();
+    String solrHome() default "/tmp/solr";
 
+    /*
     @AttributeDefinition(
             name = "Solr Installation Directory",
             description = "The directory where solr is installed"
     )
     String solrInstallDir();
+
+    */
 
     @AttributeDefinition(
             name = "Run ZooKeeper",
@@ -25,14 +34,15 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
                     "know who you are in the list of addresses in the zkHost connect string. Use -DzkRun (with no value) to get the default value." +
                     "Defaults to localhost:<hostPort+1000>. Same as solr -DzkRun parameter"
     )
-    String zkRun();
+    String zkRun() default "";
 
     @AttributeDefinition(
             name = "ZooKeeper host connect",
             description = "The host address for ZooKeeper. Usually this is a comma-separated list of addresses to each node in your ZooKeeper " +
                     "ensemble. Same as solr -DzkHost parameter."
     )
-    String zkHost();
+    String zkHost() default "";
+
 
     @AttributeDefinition(
             name = "ZooKeeper client timeout",
@@ -40,7 +50,6 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
                     "Same as solr -DzkClientTimeout parameter"
     )
     int zkClientTimeout() default 15000;
-
 
     /* Solr.xml parameters */
     @AttributeDefinition(
@@ -51,19 +60,19 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
                     "org.apache.solr.handler.admin.CoreAdminHandler. For more information on this parameter, " +
                     "see the Solr Wiki at http://wiki.apache.org/solr/CoreAdmin#cores."
     )
-    String adminHandler();
+    String adminHandler() default "";
 
     @AttributeDefinition(
             name = "Custom CollectionHandler",
             description = "As above, for custom CollectionsHandler implementations."
     )
-    String collectionsHandler();
+    String collectionsHandler() default "";
 
     @AttributeDefinition(
             name = "Custom InfoHanddler",
             description = "As above, for custom InfoHandler implementations."
     )
-    String infoHandler();
+    String infoHandler() default "";
 
     @AttributeDefinition(
             name = "Core load threads",
@@ -75,7 +84,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "Core root directory",
             description = "The root of the core discovery tree, defaults to $SOLR_HOME."
     )
-    String coreRootDirectory();
+    String coreRootDirectory() default "";
 
     @AttributeDefinition(
             name = "Shared lib path",
@@ -83,7 +92,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
                     "Any JAR files in this directory will be added to the search path for Solr plugins. " +
                     "This path is relative to $SOLR_HOME. Custom handlers may be placed in this directory."
     )
-    String sharedLib();
+    String sharedLib() default "lib";
 
     @AttributeDefinition(
             name = "Shared schema",
@@ -104,7 +113,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "Config Set Base Dir",
             description = "The directory under which configsets for Solr cores can be found. Defaults to $SOLR_HOME/configsets."
     )
-    String configSetBaseDir();
+    String configSetBaseDir() default "configsets";
 
 
     /*
@@ -128,14 +137,14 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "SolrCloud - host",
             description = "The hostname Solr uses to access cores."
     )
-    String solrcloud_host();
+    String solrcloud_host() default "";
 
 
     @AttributeDefinition(
             name = "SolrCloud - url context path",
             description = "The url context path."
     )
-    String solrcloud_hostContext();
+    String solrcloud_hostContext() default "";
 
     @AttributeDefinition(
             name = "SolrCloud - host port",
@@ -172,7 +181,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "SolrCloud - zkHost",
             description = "In SolrCloud mode, the URL of the ZooKeeper host that Solr should use for cluster state information."
     )
-    String solrcloud_zkHost();
+    String solrcloud_zkHost() default "";
 
     @AttributeDefinition(
             name = "SolrCloud - generic core node names",
@@ -185,13 +194,13 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "SolrCloud - zkCredentialsProvider",
             description = "Optional parameters that can be specified if you are using ZooKeeper Access Control."
     )
-    String solrcloud_zkCredentialsProvider();
+    String solrcloud_zkCredentialsProvider() default "";
 
     @AttributeDefinition(
             name = "SolrCloud - zkACLProvider",
             description = "Optional parameters that can be specified if you are using ZooKeeper Access Control."
     )
-    String solrcloud_zkACLProvider();
+    String solrcloud_zkACLProvider() default "";
 
     /*
     Custom shard handlers can be defined in solr.xml if you wish to create a custom shard handler.
@@ -233,7 +242,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
             name = "Default Shard Handler Factory - URL Scheme",
             description = "URL scheme to be used in distributed search"
     )
-    String http_shardHandler_urlScheme();
+    String http_shardHandler_urlScheme() default "";
 
     @AttributeDefinition(
             name = "Default Shard Handler Factory - Max connection per host",

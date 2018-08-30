@@ -18,6 +18,9 @@
         <bundle start-level="20">mvn:org.json/json/20170516</bundle>
     </feature>
 
+    <feature name="jsr305" version="1.1.0" description="JSR 305">
+        <bundle start-level="20">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsr305/3.0.2_1</bundle>
+    </feature>
 
     <feature name="javax-transaction-api" version="1.2" description="Java Transaction APi 1.2">
         <feature>javax-cdi-api</feature>
@@ -69,14 +72,14 @@
         <feature>javax-transaction-api</feature>
         <bundle start-level="20">mvn:commons-beanutils/commons-beanutils/1.9.2</bundle>
         <bundle start-level="20">mvn:commons-collections/commons-collections/3.2.2</bundle>
-        <bundle start-level="20">mvn:commons-io/commons-io/2.4</bundle>
+        <bundle start-level="20">mvn:commons-io/commons-io/2.6</bundle>
         <bundle start-level="20">mvn:commons-pool/commons-pool/1.6</bundle>
         <bundle start-level="20">mvn:org.apache.commons/commons-pool2/2.4.1</bundle>
         <bundle start-level="20">mvn:org.apache.commons/commons-dbcp2/2.1.1</bundle>
         <bundle start-level="20">mvn:commons-codec/commons-codec/1.10</bundle>
         <bundle start-level="35">mvn:commons-fileupload/commons-fileupload/1.3.1</bundle>
         <bundle start-level="20">mvn:commons-lang/commons-lang/2.6</bundle>
-        <bundle start-level="20">mvn:org.apache.commons/com.springsource.org.apache.commons.logging/1.1.1</bundle>
+        <bundle start-level="20">mvn:commons-logging/commons-logging/1.2</bundle>
         <bundle start-level="20">mvn:commons-configuration/commons-configuration/1.10</bundle>
         <bundle start-level="20">mvn:org.apache.commons/commons-math3/3.6.1</bundle>
         <bundle start-level="20">mvn:org.apache.commons/commons-math/2.2</bundle>
@@ -140,39 +143,17 @@
     </feature>
 
     <feature install= "false" name="lucene" version="7.0.1" description="Apache Lucene">
-        <feature>scr</feature>
+        <feature dependency="true">scr</feature>
         <feature>http</feature>
         <feature>cxf-jackson</feature>
         <feature>icu4j</feature>
         <feature>antlr4</feature>
         <feature>apache-commons</feature>
-        <feature>cxf-jackson</feature>
+        <bundle start-level="20">mvn:org.ow2.asm/asm-all/5.2</bundle>
         <bundle start-level="35">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-smile/2.9.1</bundle>
         <bundle start-level="35">mvn:org.locationtech.spatial4j/spatial4j/0.6</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-misc/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-core/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-common/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-icu/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-phonetic/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-stempel/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-queries/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-grouping/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-memory/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-join/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-highlighter/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-queryparser/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-suggest/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-facet/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-expressions/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-codecs/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-smartcn/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-analyzers-kuromoji/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-classification/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial3d/7.0.1_1</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-spatial-extras/7.0.1_1</bundle>
+        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_2</bundle>
     </feature>
-    <!-- <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.spatial4j/0.5_1</bundle> -->
 
     <feature install= "false" name="solr" version="7.0.1" description="Apache Solr">
         <feature>apache-xerces</feature>
@@ -184,6 +165,7 @@
         <feature>guava</feature>
         <feature>apache-httpclient</feature>
         <feature>dropwizard-metrics</feature>
+        <feature>jsr305</feature>
 
         <bundle start-level="35">mvn:com.google.jimfs/jimfs/1.1</bundle>
         <bundle start-level="40">mvn:com.github.ben-manes.caffeine/caffeine/2.5.6</bundle>
@@ -191,23 +173,36 @@
         <bundle start-level="40">mvn:com.carrotsearch/hppc/0.7.2</bundle>
         <bundle start-level="40">mvn:hu.blackbelt.bundles.t-digest/com.tdunning.t-digest/3.2_1</bundle>
         <bundle start-level="40">mvn:hu.blackbelt.bundles.solr/org.apache.solr/7.0.1_1</bundle>
-        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle>
+        <!-- Not presented in central
+        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle> -->
+        <bundle start-level="40">http://repo.spring.io/plugins-release/org/restlet/osgi/org.restlet/2.3.12/org.restlet-2.3.12.jar</bundle>
         <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
-
     </feature>
 
+    <feature name="osgi-utils" version="1.0.1" description="Blackbelt OSGi utils">
+        <feature>guava</feature>
+        <feature>scr</feature>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.1</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.1</bundle>
+    </feature>
 
     <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">
         <feature>scr</feature>
         <feature>solr</feature>
+        <feature>osgi-utils</feature>
         <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-services/${project.version}</bundle>
     </feature>
 
     <feature install= "false" name="solr-http" version="7.0.1" description="Apache Solr HTTP">
         <feature>http-whiteboard</feature>
         <feature>solr-services</feature>
+        <!-- Not presented in central
         <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.servlet/2.3.12</bundle>
         <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.osgi/2.3.12</bundle>
+        -->
+        <bundle start-level="40">http://repo.spring.io/plugins-release/org/restlet/osgi/org.restlet.ext.servlet/2.3.12/org.restlet.ext.servlet-2.3.12.jar</bundle>
+        <bundle start-level="40">http://repo.spring.io/plugins-release/org/restlet/osgi/org.restlet.ext.osgi/2.3.12/org.restlet.ext.osgi-2.3.12.jar</bundle>
+
         <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-http/${project.version}</bundle>
     </feature>
 

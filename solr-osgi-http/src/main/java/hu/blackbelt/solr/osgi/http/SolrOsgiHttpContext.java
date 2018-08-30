@@ -18,12 +18,16 @@ public class SolrOsgiHttpContext extends ServletContextHelper implements HttpCon
 
     public final static String NAME="solr";
 
-    private MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
+    private MimetypesFileTypeMap mimetypesFileTypeMap;
 
     private BundleContext bundleContext;
 
     public SolrOsgiHttpContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
+        ClassLoader old = Thread.currentThread().getContextClassLoader();
+        Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+        mimetypesFileTypeMap = new MimetypesFileTypeMap();
+        Thread.currentThread().setContextClassLoader(old);
     }
 
 
@@ -36,7 +40,7 @@ public class SolrOsgiHttpContext extends ServletContextHelper implements HttpCon
     @Override
     public URL getResource(String name) {
         String actualName = name;
-        if (actualName.equals("/")) {
+        if (actualName == null || actualName.equalsIgnoreCase("") || actualName.equals("/")) {
             actualName = "/index.html";
         }
         return bundleContext.getBundle().getResource(actualName);
