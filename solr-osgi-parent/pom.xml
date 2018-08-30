@@ -3,7 +3,7 @@
     
     <groupId>hu.blackbelt</groupId>
     <artifactId>solr-osgi-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     
     <name>Solr OSGi parent</name>
