@@ -105,7 +105,7 @@ northwind | suppliers                   |                           |           
 
 # Setup core
 
-Put solr.core-northwind1.cfg
+To add configSet template, copy the *solr-osgi-example-configsets-dataimportNorthwind* projects jar to *karaf/deploy*. Also put solr.core-northwind1.cfg to *karaf/deploy* to enable Northwind core.
 
 ----
 name=northwind1
@@ -114,3 +114,6 @@ property.jndiName=northwind
 ----
 
 
+# Test configuration
+
+Go to Solr Admin console (http://localhost:8181/solr/), select *northwind1* core and execute *Dataimport* with default settings. You can see number of imported documents (45) on Overview page.
