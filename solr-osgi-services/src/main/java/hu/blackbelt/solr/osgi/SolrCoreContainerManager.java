@@ -348,7 +348,7 @@ public class SolrCoreContainerManager {
                             PropertiesUtil.toString(configurationInfo.getProperties().get(CONFIGURATION_NAME), null),
                             configurationInfo.getProperties());
                 } catch (Exception e) {
-                    log.error("Coukd not start core: " + configurationInfo.toString());
+                    log.error("Could not start core: " + configurationInfo.toString());
                 }
             }
         };
@@ -364,7 +364,7 @@ public class SolrCoreContainerManager {
                     OsgiSolrFactory.stopServer(coreContainer,
                             PropertiesUtil.toString(configurationInfo.getProperties().get(CONFIGURATION_NAME), null));
                 } catch (Exception e) {
-                    log.error("Coukd not start core: " + configurationInfo.toString());
+                    log.error("Could not start core: " + configurationInfo.toString());
                 }
             }
         };
