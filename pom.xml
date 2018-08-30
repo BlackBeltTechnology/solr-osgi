@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>hu.blackbelt</groupId>
+    <artifactId>solr-osgi</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    
+    <name>Solr OSGi</name>
+    
+    <modules>
+        <module>solr-osgi-parent</module>
+        <module>solr-osgi-example-configsets-exampleCollection</module>
+        <module>solr-osgi-example-configsets-dataimportNorthwind</module>
+        <module>solr-osgi-services</module>
+        <module>solr-osgi-http</module>
+        <module>solr-osgi-feature</module>
+    </modules>
+    
+    <scm>
+        <connection>scm:git:git://github.com/BlackBeltTechnology/solr-osgi.git</connection>
+        <developerConnection>scm:git:ssh://${git.username}@github.com:BlackBeltTechnology/solr-osgi.git</developerConnection>
+        <url>http://github.com/BlackBeltTechnology/solr-osgi</url>
+    </scm>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>${jgitflow-maven-plugin.version}</version>
+                <configuration>
+                    <noDeploy>true</noDeploy>
+                    <username>${git.username}</username>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.9.5</version>
+                <configuration>
+                    <connectionType>developerConnection</connectionType>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <properties>
+        <jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+    
+    
+    <profiles>
+        <profile>
+            <id>release-github</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>de.jutzig</groupId>
+                        <artifactId>github-release-plugin</artifactId>
+                        <version>1.2.0</version>
+                        <configuration>
+                            <repositoryId>https://github.com/BlackBeltTechnology/solr-osgi.git</repositoryId>
+                            <description>Branch: ${env.WERCKER_GIT_BRANCH} Wercker: ${env.WERCKER_RUN_URL}</description>
+                            <releaseName>${project.version}</releaseName>
+                            <prerelease>true</prerelease>
+                            <tag>${project.version}</tag>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>solr-osgi-example-configsets-dataimportNorthwind/target</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>solr-osgi-example-configsets-exampleCollection/target</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>solr-osgi-feature/target/features</directory>
+                                    <includes>
+                                        <include>*.xml</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>solr-osgi-http/target</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>solr-osgi-parent</directory>
+                                    <includes>
+                                        <include>pom.xml</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>solr-osgi-services/target</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>release-to-github</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>release</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
