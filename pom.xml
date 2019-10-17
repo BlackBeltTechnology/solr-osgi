@@ -15,6 +15,7 @@
         <module>solr-osgi-services</module>
         <module>solr-osgi-http</module>
         <module>solr-osgi-feature</module>
+        <module>solr-osgi-offline</module>
     </modules>
     
     <scm>
