@@ -1,25 +1,32 @@
 box: maven:3.5.4-jdk-8
 no-response-timeout: 15
 command-timeout: 60
+ignore-file: .gitignore
 
 build:
   steps:	
    
-    - blackbelttechnology/version-from-git-tag@1.0.4
+    - blackbelttechnology/version-from-git-tag@1.0.8
  
     - blackbelttechnology/version-from-pom@1.0.2:
       pom: solr-osgi-parent/pom.xml
+
+    - script:
+      name: calculate version number
+      code: |-
+        export VERSION_NUMBER=${VERSION_FROM_POM_BASE_VERSION}.$(date +%Y%m%d_%H%M%S)_${VERSION_FROM_GIT_TAG_SHORT_SHA1}_${VERSION_FROM_GIT_TAG_CURRENT_BRANCH_VALID_NAME}
+        echo "Building version: ${VERSION_NUMBER}"
       
     - wercker/maven:
       goals: versions:set
       pom: ./solr-osgi-parent/pom.xml
-      maven_opts: -DnewVersion=${VERSION_FROM_POM_BASE_VERSION}_${VERSION_FROM_GIT_TAG_CURRENT_BRANCH_VALID_NAME}-${VERSION_FROM_GIT_TAG_COMMIT_COUNT}
+      maven_opts: -DnewVersion=${VERSION_NUMBER}
       cache_repo: true
 
     - wercker/maven:
       goals: versions:set
       pom: ./pom.xml
-      maven_opts: -DnewVersion=${VERSION_FROM_POM_BASE_VERSION}_${VERSION_FROM_GIT_TAG_CURRENT_BRANCH_VALID_NAME}-${VERSION_FROM_GIT_TAG_COMMIT_COUNT}
+      maven_opts: -DnewVersion=${VERSION_NUMBER}
       cache_repo: true
 
     - wercker/maven:
@@ -70,7 +77,7 @@ release:
              git config --global user.email "oss@blackbelt.hu"
              git config --global user.name "Wercker Release"
     
-    - blackbelttechnology/version-from-git-tag@1.0.0
+    - blackbelttechnology/version-from-git-tag@1.0.8
 
     - script:
         name: reset git state to actual commit
