@@ -373,7 +373,6 @@
                             <repositoryId>${project-repositoryId}</repositoryId>
                             <description>
                                 **Branch:** ${env.WERCKER_GIT_BRANCH}
-                                **P2 Update Site:** https://nexus.blackbelt.cloud/repository/p2-judo/${project-shortname}/${project.version}
                                 **Maven repository:** https://nexus.blackbelt.cloud/#browse/browse:maven-judo-release:hu%2Fblackbelt%2Feclipse%2F${project-shortname}
                                 **Wercker:** https://app.wercker.com/${project-repositoryId}/runs/build/${env.WERCKER_RUN_ID}
                             </description>
@@ -388,7 +387,7 @@
                                     <includes>
                                         <include>**/target/*.jar</include>
                                         <include>**/target/*.kar</include>
-                                        <include>${project-shortname}-karaf-features/target/feature/feature.xml</include>
+                                        <include>${project-shortname}-features/target/feature/feature.xml</include>
                                     </includes>
                                 </fileSet>
                             </fileSets>
