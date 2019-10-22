@@ -53,8 +53,8 @@
     </scm>
 
     <properties>
-        <project-shortname>judo-tatami</project-shortname>
-        <project-repositoryId>BlackBeltTechnology/judo-tatami</project-repositoryId>
+        <project-shortname>solr-osgi</project-shortname>
+        <project-repositoryId>BlackBeltTechnology/solr-osgi</project-repositoryId>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.deploy.skip>false</maven.deploy.skip>
