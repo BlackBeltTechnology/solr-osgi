@@ -91,7 +91,7 @@
         <dependency>
             <groupId>hu.blackbelt.osgi.utils</groupId>
             <artifactId>osgi-api</artifactId>
-            <version>${osgi-util-version}</version>
+            <version>${osgi-utils-version}</version>
         </dependency>
 
         <dependency>
