@@ -173,9 +173,8 @@
         <bundle start-level="40">mvn:com.carrotsearch/hppc/0.7.2</bundle>
         <bundle start-level="40">mvn:hu.blackbelt.bundles.t-digest/com.tdunning.t-digest/3.2_1</bundle>
         <bundle start-level="40">mvn:hu.blackbelt.bundles.solr/org.apache.solr/7.0.1_1</bundle>
-        <!-- Not presented in central
-        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle> -->
-        <bundle start-level="40">http://repo.spring.io/plugins-release/org/restlet/osgi/org.restlet/2.3.12/org.restlet-2.3.12.jar</bundle>
+
+        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle>
         <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
     </feature>
 
@@ -196,12 +195,9 @@
     <feature install= "false" name="solr-http" version="7.0.1" description="Apache Solr HTTP">
         <feature>http-whiteboard</feature>
         <feature>solr-services</feature>
-        <!-- Not presented in central
+
         <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.servlet/2.3.12</bundle>
         <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.osgi/2.3.12</bundle>
-        -->
-        <bundle start-level="40">http://repo.spring.io/plugins-release/org/restlet/osgi/org.restlet.ext.servlet/2.3.12/org.restlet.ext.servlet-2.3.12.jar</bundle>
-        <bundle start-level="40">http://repo.spring.io/plugins-release/org/restlet/osgi/org.restlet.ext.osgi/2.3.12/org.restlet.ext.osgi-2.3.12.jar</bundle>
 
         <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-http/${project.version}</bundle>
     </feature>
