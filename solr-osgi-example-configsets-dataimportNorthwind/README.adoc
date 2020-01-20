@@ -4,10 +4,17 @@ Setup solr-osgi as described in the base readme.
 
 # Setup database
 
-Loading preconfigured northwind database.
+Loading preconfigured northwind database (as a Docker container).
 
 ----
-docker run --name northwind -e MYSQL_ROOT_PASSWORD=northwind -p 3306:3306 bylek/northwind-mysql
+docker run --name northwind -itd -e MYSQL_ROOT_PASSWORD=northwind -p 3306:3306 bylek/northwind-mysql
+----
+
+You can stop and restart northwind database with the following (Docker) commands:
+
+----
+docker stop northwind
+docker start northwind
 ----
 
 # Setup karaf datasource
