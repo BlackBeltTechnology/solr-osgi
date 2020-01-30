@@ -74,7 +74,7 @@
 
         <solr-version>7.0.1</solr-version>
 
-        <osgi-utils-version>1.0.8.20200112_012807_d70d730_develop</osgi-utils-version>
+        <osgi-utils-version>1.0.8</osgi-utils-version>
 
     </properties>
 
