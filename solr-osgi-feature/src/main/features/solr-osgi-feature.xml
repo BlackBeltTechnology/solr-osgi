@@ -91,8 +91,8 @@
         <bundle start-level="20">mvn:org.apache.httpcomponents/httpclient-osgi/4.5.3</bundle>
     </feature>
 
-    <feature name="guava" version="18.0" description="Google Guava">
-        <bundle start-level="20">mvn:com.google.guava/guava/18.0</bundle>
+    <feature name="guava-20" version="20.0" description="Google Guava">
+        <bundle start-level="20">mvn:com.google.guava/guava/20.0</bundle>
     </feature>
     <feature name="joda-time" version="2.9.5" description="Joda Time">
         <bundle start-level="20">mvn:joda-time/joda-time/2.9.5</bundle>
@@ -162,7 +162,7 @@
         <feature>joda-time</feature>
         <feature>apache-poi</feature>
         <feature>velocity</feature>
-        <feature>guava</feature>
+        <feature>guava-20</feature>
         <feature>apache-httpclient</feature>
         <feature>dropwizard-metrics</feature>
         <feature>jsr305</feature>
@@ -178,11 +178,11 @@
         <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
     </feature>
 
-    <feature name="osgi-utils" version="1.0.1" description="Blackbelt OSGi utils">
-        <feature>guava</feature>
+    <feature name="osgi-utils" version="1.0.9" description="Blackbelt OSGi utils">
+        <feature>guava-20</feature>
         <feature>scr</feature>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.1</bundle>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.1</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.9</bundle>
+        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.9</bundle>
     </feature>
 
     <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">
