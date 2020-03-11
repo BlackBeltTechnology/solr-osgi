@@ -91,7 +91,7 @@
         <bundle start-level="20">mvn:org.apache.httpcomponents/httpclient-osgi/4.5.3</bundle>
     </feature>
 
-    <feature name="guava-20" version="20.0" description="Google Guava">
+    <feature name="guava-20" version="20.0" description="Google Guava 20">
         <bundle start-level="20">mvn:com.google.guava/guava/20.0</bundle>
     </feature>
     <feature name="joda-time" version="2.9.5" description="Joda Time">
@@ -167,12 +167,14 @@
         <feature>dropwizard-metrics</feature>
         <feature>jsr305</feature>
 
+        <!--
         <bundle start-level="35">mvn:com.google.jimfs/jimfs/1.1</bundle>
+        -->
         <bundle start-level="40">mvn:com.github.ben-manes.caffeine/caffeine/2.5.6</bundle>
         <bundle start-level="40">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.noggit/0.8_1</bundle>
         <bundle start-level="40">mvn:com.carrotsearch/hppc/0.7.2</bundle>
         <bundle start-level="40">mvn:hu.blackbelt.bundles.t-digest/com.tdunning.t-digest/3.2_1</bundle>
-        <bundle start-level="40">mvn:hu.blackbelt.bundles.solr/org.apache.solr/7.0.1_1</bundle>
+        <bundle start-level="40">mvn:hu.blackbelt.bundles.solr/org.apache.solr/7.0.1_2</bundle>
 
         <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle>
         <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>

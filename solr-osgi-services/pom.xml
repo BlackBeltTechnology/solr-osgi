@@ -49,6 +49,9 @@
                             *
                         </Import-Package>
                         <Provide-Capability>osgi.service;objectClass="org.apache.solr.core.CoreContainer";effective:="active"</Provide-Capability>
+                        <Embed-Dependency>
+                            jimfs
+                        </Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>
