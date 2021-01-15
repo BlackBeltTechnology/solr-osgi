@@ -24,4 +24,4 @@ nb*.xml
 .wercker
 
 wercker.env
-
+.release
