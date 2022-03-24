@@ -3,8 +3,7 @@
     <parent>
         <groupId>hu.blackbelt</groupId>
         <artifactId>solr-osgi-parent</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <version>${revision}</version>
     </parent>
 
     <properties>
@@ -60,32 +59,34 @@
                                 <feature>shell-compat</feature>
                             </framework>
                             <features>
+                                <feature>javax-servlet-api</feature>
                                 <feature>javax-interceptor-api</feature>
                                 <feature>javax-annotation-api</feature>
-                                <feature>javax-el-api</feature>
-                                <feature>javax-cdi-api</feature>
+                                <feature>json</feature>
+                                <feature>jsr305</feature>
                                 <feature>javax-transaction-api</feature>
+                                <feature>javax-cdi-api</feature>
+                                <feature>javax-el-api</feature>
+                                <feature>javax-validation-api</feature>
+                                <feature>javax-money-api</feature>
                                 <feature>javax-mail-api</feature>
-                                <feature>javax-servlet-api</feature>
                                 <feature>xmlresolver</feature>
                                 <feature>apache-xerces</feature>
                                 <feature>apache-commons</feature>
                                 <feature>apache-httpclient</feature>
-                                <feature>bouncycastle</feature>
-                                <feature>cxf-jackson</feature>
-                                <feature>xmlbeans</feature>
+                                <feature>guava-20</feature>
                                 <feature>joda-time</feature>
-                                <feature>apache-poi</feature>
-                                <feature>antlr4</feature>
-                                <feature>velocity</feature>
                                 <feature>icu4j</feature>
+                                <feature>antlr4</feature>
+                                <feature>bouncycastle</feature>
                                 <feature>dropwizard-metrics</feature>
-                                <feature>jsr305</feature>
+                                <feature>xmlbeans</feature>
+                                <feature>apache-poi</feature>
+                                <feature>velocity</feature>
                                 <feature>lucene</feature>
-                                <feature>javassist</feature>
-                                <feature>reflections</feature>
-                                <feature>osgi-utils</feature>
+                                <feature>cxf-jackson</feature>
                                 <feature>solr</feature>
+                                <feature>osgi-utils</feature>
                                 <feature>solr-services</feature>
                                 <feature>solr-http</feature>
                             </features>

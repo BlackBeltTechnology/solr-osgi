@@ -4,7 +4,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.ear
 
@@ -25,3 +25,4 @@ nb*.xml
 
 wercker.env
 .release
+**/.flattened-pom.xml
