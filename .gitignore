@@ -26,3 +26,5 @@ nb*.xml
 wercker.env
 .release
 **/.flattened-pom.xml
+
+.karaf

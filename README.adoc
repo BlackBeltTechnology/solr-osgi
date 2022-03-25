@@ -4,24 +4,83 @@ This project goal is to be able to run Apache Solr in OSGi environment and bring
 
 [NOTE]
 ====
-There is no all of the Solr features supported yet, clustering and sharding haven't been tested. In theory every piece of feature can be implemented in the future. Cellar based SolCloud implementation is planned. Now only configSet based cores can be used.
+There is not all of the Solr features supported yet, clustering and sharding haven't been tested. In theory every piece of feature can be implemented in the future. Cellar based SolCloud implementation is planned. Now only configSet based cores can be used.
 ====
-
-## How it works?
-
-There are a declarative component called SolrCoreContainerManager which monitors the following items:
-
-* *solr.core* or *solr.core-<pid>* configuration PID-s in ConfigurationAdmin service. This configuration defines a core cofigurations. The properties are very same as can be used in CoreAdmin API. Custom properties can be defined in admin-requests, 'property' prefix can be used on custom properties. Two mandatory properties are: name and configSet. 
-
-* All bundles which have the Solr-Configset tag in *META-INF/MANIFEST.MF*. It loades configSets to CoreContainer. The cores can use thats configSets as a template. The configSets are stored to an in-Memory filesystem which is used to load files by solr. 
-
-The manager creates SolrClient instances when the configSet loaded which referenced by solr.core confugurations. In the future the core definitions which does not have configSet can be created as normal cores, but for that some file based resource management implementation is required.
-
-When a core config or configSet bundle removed the related solrClients are stopping. The data directory is not removed, so it can be reused later.
 
 ## Installation and usage
 
-Any OSGi 6.0 container canbe used for deployment. It is tested with Apache Karaf 4.1.2.
+### Use solr-osgi-karaf distribution
+
+The solr-osgi package bundled as offline karaf package. It can installed and
+executed.
+
+Compile project
+
+----
+./mvnw clean install
+----
+
+To run on MacOS / Linux, use
+----
+./run-karaf
+----
+after compilation.
+
+Two example is embedded. It can be installed.
+
+For Northwind example - which is SQL DataImport example - northwind example have to be started
+before feature is started.
+
+----
+docker run --name northwind -itd -e MYSQL_ROOT_PASSWORD=northwind -p 3306:3306 bylek/northwind-mysql
+----
+
+When karaf is running, open browser:
+
+`http://localhost:8181/system/console/features`
+
+image::images/features1.png[]
+
+image::images/features2.png[]
+
+After install `exampleCollection` and `exampleNorthwind` feature
+point browser to `http://localhost:8181/solr`
+
+image::images/solr.png[]
+
+Select `northwind1` core.
+
+image::images/select-core.png[]
+
+Selecct `Dataimport` menu
+
+image::images/dataimport-select.png[]
+
+Check `Auto-Refresh Status` and push `Execute`
+
+image::images/dataimport-execute.png[]
+
+After a couple of sec, the following page shows that the data have been indexed.
+
+image::images/dataimport-result.png[]
+
+Let's start to search / browse.
+Select `Query` function.
+
+image::images/select-query.png[]
+
+And execute one
+
+image::images/execute-query.png[]
+
+And check the result.
+
+image::images/query-result.png[]
+
+Happy searching!
+
+### Use your own karaf
+Any OSGi 6.0 container can be used for deployment. It is tested with Apache Karaf 4.3.6.
 
 To install in karaf console:
 
@@ -117,3 +176,15 @@ After the Solr Admin can be accessed http://localhost:8181/solr/
 ## Core container parameters
 
 Core containers have very same parameters as the original ones, but not all of them can be used now.
+
+## How it works?
+
+There are a declarative component called SolrCoreContainerManager which monitors the following items:
+
+* *solr.core* or *solr.core-<pid>* configuration PID-s in ConfigurationAdmin service. This configuration defines a core cofigurations. The properties are very same as can be used in CoreAdmin API. Custom properties can be defined in admin-requests, 'property' prefix can be used on custom properties. Two mandatory properties are: name and configSet.
+
+* All bundles which have the Solr-Configset tag in *META-INF/MANIFEST.MF*. It loades configSets to CoreContainer. The cores can use thats configSets as a template. The configSets are stored to an in-Memory filesystem which is used to load files by solr.
+
+The manager creates SolrClient instances when the configSet loaded which referenced by solr.core confugurations. In the future the core definitions which does not have configSet can be created as normal cores, but for that some file based resource management implementation is required.
+
+When a core config or configSet bundle removed the related solrClients are stopping. The data directory is not removed, so it can be reused later.

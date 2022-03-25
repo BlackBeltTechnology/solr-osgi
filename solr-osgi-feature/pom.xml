@@ -53,21 +53,14 @@
                                 <descriptor>file:${project.build.directory}/features/solr-osgi-feature.xml</descriptor>
                             </descriptors>
                             <distribution>org.apache.karaf.features:framework</distribution>
-                            <javase>1.8</javase>
+                            <javase>11</javase>
                             <framework>
                                 <feature>framework</feature>
-                                <feature>shell-compat</feature>
+                                <feature>wrap</feature>
                             </framework>
                             <features>
-                                <feature>javax-servlet-api</feature>
-                                <feature>javax-interceptor-api</feature>
-                                <feature>javax-annotation-api</feature>
                                 <feature>json</feature>
                                 <feature>jsr305</feature>
-                                <feature>javax-transaction-api</feature>
-                                <feature>javax-cdi-api</feature>
-                                <feature>javax-el-api</feature>
-                                <feature>javax-validation-api</feature>
                                 <feature>javax-money-api</feature>
                                 <feature>javax-mail-api</feature>
                                 <feature>xmlresolver</feature>
@@ -84,11 +77,12 @@
                                 <feature>apache-poi</feature>
                                 <feature>velocity</feature>
                                 <feature>lucene</feature>
-                                <feature>cxf-jackson</feature>
                                 <feature>solr</feature>
                                 <feature>osgi-utils</feature>
                                 <feature>solr-services</feature>
                                 <feature>solr-http</feature>
+                                <feature>solr-osgi-example-configsets-exampleCollection</feature>
+                                <feature>solr-osgi-example-configsets-dataimportNorthwind</feature>
                             </features>
                         </configuration>
                     </execution>
@@ -139,39 +133,39 @@
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>framework</artifactId>
             <type>kar</type>
-            <scope>runtime</scope>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>standard</artifactId>
             <classifier>features</classifier>
-            <scope>runtime</scope>
             <type>xml</type>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>spring</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>enterprise</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>enterprise</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
+            <scope>provided</scope>
             <version>${karaf-version}</version>
         </dependency>
         <dependency>
@@ -179,7 +173,7 @@
             <artifactId>apache-cxf</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
+            <scope>provided</scope>
             <version>${cxf-version}</version>
         </dependency>
     </dependencies>
