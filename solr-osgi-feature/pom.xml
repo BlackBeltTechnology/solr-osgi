@@ -3,8 +3,7 @@
     <parent>
         <groupId>hu.blackbelt</groupId>
         <artifactId>solr-osgi-parent</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+        <version>${revision}</version>
     </parent>
 
     <properties>
@@ -54,40 +53,36 @@
                                 <descriptor>file:${project.build.directory}/features/solr-osgi-feature.xml</descriptor>
                             </descriptors>
                             <distribution>org.apache.karaf.features:framework</distribution>
-                            <javase>1.8</javase>
+                            <javase>11</javase>
                             <framework>
                                 <feature>framework</feature>
-                                <feature>shell-compat</feature>
+                                <feature>wrap</feature>
                             </framework>
                             <features>
-                                <feature>javax-interceptor-api</feature>
-                                <feature>javax-annotation-api</feature>
-                                <feature>javax-el-api</feature>
-                                <feature>javax-cdi-api</feature>
-                                <feature>javax-transaction-api</feature>
+                                <feature>json</feature>
+                                <feature>jsr305</feature>
+                                <feature>javax-money-api</feature>
                                 <feature>javax-mail-api</feature>
-                                <feature>javax-servlet-api</feature>
                                 <feature>xmlresolver</feature>
                                 <feature>apache-xerces</feature>
                                 <feature>apache-commons</feature>
                                 <feature>apache-httpclient</feature>
-                                <feature>bouncycastle</feature>
-                                <feature>cxf-jackson</feature>
-                                <feature>xmlbeans</feature>
+                                <feature>guava-20</feature>
                                 <feature>joda-time</feature>
-                                <feature>apache-poi</feature>
-                                <feature>antlr4</feature>
-                                <feature>velocity</feature>
                                 <feature>icu4j</feature>
+                                <feature>antlr4</feature>
+                                <feature>bouncycastle</feature>
                                 <feature>dropwizard-metrics</feature>
-                                <feature>jsr305</feature>
+                                <feature>xmlbeans</feature>
+                                <feature>apache-poi</feature>
+                                <feature>velocity</feature>
                                 <feature>lucene</feature>
-                                <feature>javassist</feature>
-                                <feature>reflections</feature>
-                                <feature>osgi-utils</feature>
                                 <feature>solr</feature>
+                                <feature>osgi-utils</feature>
                                 <feature>solr-services</feature>
                                 <feature>solr-http</feature>
+                                <feature>solr-osgi-example-configsets-exampleCollection</feature>
+                                <feature>solr-osgi-example-configsets-dataimportNorthwind</feature>
                             </features>
                         </configuration>
                     </execution>
@@ -138,39 +133,39 @@
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>framework</artifactId>
             <type>kar</type>
-            <scope>runtime</scope>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>standard</artifactId>
             <classifier>features</classifier>
-            <scope>runtime</scope>
             <type>xml</type>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>spring</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>enterprise</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
             <version>${karaf-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>enterprise</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
+            <scope>provided</scope>
             <version>${karaf-version}</version>
         </dependency>
         <dependency>
@@ -178,7 +173,7 @@
             <artifactId>apache-cxf</artifactId>
             <classifier>features</classifier>
             <type>xml</type>
-            <scope>runtime</scope>
+            <scope>provided</scope>
             <version>${cxf-version}</version>
         </dependency>
     </dependencies>
