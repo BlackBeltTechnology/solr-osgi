@@ -1,8 +1,8 @@
-# Mysql DataImport example on Northwind database
+= Mysql DataImport example on Northwind database
 
 Setup solr-osgi as described in the base readme.
 
-# Setup database
+= Setup database
 
 Loading preconfigured northwind database (as a Docker container).
 
@@ -17,29 +17,35 @@ docker stop northwind
 docker start northwind
 ----
 
-# Setup karaf datasource
+= Test with solr-karaf
 
-## Install JDBC Driver
+Run the `run-karaf.sh` in the project root.
 
-feature:install pax-jdbc-config pax-jdbc-mysql
+= Test with standard karaf
 
-## Install JNDI access 
+== Setup karaf datasource
+
+=== Install JDBC Driver
+
+feature:install pax-jdbc-config pax-jdbc-mariadb
+
+=== Install JNDI access
 
 feature:install jndi
 
-## Add datasource
+=== Add datasource
 
 Create file at Karaf deploy named /org.ops4j.datasource-northwind.cfg
 
 ----
-osgi.jdbc.driver.name=mysql
+osgi.jdbc.driver.name=mariadb
 databaseName=northwind
 user=root
 password=northwind
 dataSourceName=northwind
 ----
 
-## Test
+== Test
 
 ----
 karaf@root()> service:list DataSourceFactory                                                                                                                                                                                                                                
@@ -110,7 +116,7 @@ northwind | suppliers                   |                           |           
 ----
 
 
-# Setup core
+= Setup core
 
 To add configSet template, copy the *solr-osgi-example-configsets-dataimportNorthwind* projects jar to *karaf/deploy*. Also put solr.core-northwind1.cfg to *karaf/deploy* to enable Northwind core.
 
@@ -121,6 +127,6 @@ property.jndiName=northwind
 ----
 
 
-# Test configuration
+= Test configuration
 
 Go to Solr Admin console (http://localhost:8181/solr/), select *northwind1* core and execute *Dataimport* with default settings. You can see number of imported documents (45) on Overview page.

@@ -1,140 +1,100 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features name="solr-osgi-feature-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.4.0">
 
-    <feature name="javax-servlet-api" version="3.1.0" description="Servlet API">
-        <bundle dependency="true" start-level="30">mvn:javax.servlet/javax.servlet-api/3.1.0</bundle>
-    </feature>
-
-    <feature name="javax-interceptor-api" version="1.2" description="Java Interceptor API 1.2">
-        <bundle start-level="20">mvn:javax.interceptor/javax.interceptor-api/1.2</bundle>
-    </feature>
-
-    <feature name="javax-annotation-api" version="1.2" description="Java Annotation APi 1.2">
-        <bundle start-level="20">mvn:javax.annotation/javax.annotation-api/1.2</bundle>
-        <bundle start-level="20">mvn:org.apache.geronimo.specs/geronimo-atinject_1.0_spec/1.0</bundle>
-    </feature>
-
     <feature name="json" version="20170516" description="Json.org APi 20170516">
-        <bundle start-level="20">mvn:org.json/json/20170516</bundle>
+        <bundle>mvn:org.json/json/20170516</bundle>
     </feature>
 
     <feature name="jsr305" version="1.1.0" description="JSR 305">
-        <bundle start-level="20">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsr305/3.0.2_1</bundle>
-    </feature>
-
-    <feature name="javax-transaction-api" version="1.2" description="Java Transaction APi 1.2">
-        <feature>javax-cdi-api</feature>
-        <bundle start-level="20">mvn:javax.transaction/javax.transaction-api/1.2</bundle>
-    </feature>
-
-    <feature name="javax-cdi-api" version="1.2" description="Java CDI APi 1.2">
-        <feature>javax-el-api</feature>
-        <feature>javax-annotation-api</feature>
-        <feature>javax-interceptor-api</feature>
-        <bundle start-level="20">mvn:javax.enterprise/cdi-api/1.2</bundle>
-    </feature>
-
-    <feature name="javax-el-api" version="3.0.0" description="javax Expression Language API 3.0.0">
-        <bundle start-level="20">mvn:javax.el/javax.el-api/3.0.0</bundle>
-    </feature>
-
-    <feature name="javax-validation-api" version="1.1" description="Java Validation API 1.1">
-        <bundle start-level="20">mvn:javax.validation/validation-api/1.1.0.Final</bundle>
-        <capability>osgi.service;effective:=active;objectClass=javax.validation.spi.ValidationProvider</capability>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsr305/3.0.2_1</bundle>
     </feature>
 
     <feature name="javax-money-api" version="1.0" description="Java Money API 1.0">
-        <feature>javax-validation-api</feature>
-        <bundle start-level="20">mvn:javax.money/money-api/1.0</bundle>
-        <bundle start-level="20">mvn:org.javamoney/moneta/1.0</bundle>
+        <feature>transaction-api</feature>
+        <bundle>mvn:javax.money/money-api/1.0</bundle>
+        <bundle>mvn:org.javamoney/moneta/1.0</bundle>
     </feature>
 
-    <feature name="javax-mail-api" version="1.4.4" description="Java Sun Java Mail API 1.4">
-        <bundle start-level="10">mvn:com.sun.mail/mailapi/1.5.5</bundle>
-        <bundle start-level="10">mvn:com.sun.mail/smtp/1.5.5</bundle>
-        <bundle start-level="20">mvn:javax.mail/mail/1.4.4</bundle>
+    <feature name="javax-mail-api" version="1.5.5" description="Java Sun Java Mail API 1.5">
+        <feature>transaction-api</feature>
+        <bundle>mvn:com.sun.mail/mailapi/1.5.5</bundle>
+        <bundle>mvn:com.sun.mail/smtp/1.5.5</bundle>
+        <bundle>mvn:javax.mail/mail/1.4.4</bundle>
     </feature>
-
 
     <feature name="xmlresolver" version="1.2" description="XMLResolver">
-        <bundle start-level="25">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlresolver/1.2_5</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlresolver/1.2_5</bundle>
     </feature>
 
 
     <feature name="apache-xerces" version="2.11.0" description="Apache Xerces">
         <feature>xmlresolver</feature>
-        <bundle start-level="30">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xerces/2.11.0_1</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xerces/2.11.0_1</bundle>
     </feature>
 
     <feature name="apache-commons" version="1.0.0" description="Apache Commons">
-        <feature>javax-mail-api</feature>
-        <feature>javax-servlet-api</feature>
-        <feature>javax-transaction-api</feature>
-        <bundle start-level="20">mvn:commons-beanutils/commons-beanutils/1.9.2</bundle>
-        <bundle start-level="20">mvn:commons-collections/commons-collections/3.2.2</bundle>
-        <bundle start-level="20">mvn:commons-io/commons-io/2.6</bundle>
-        <bundle start-level="20">mvn:commons-pool/commons-pool/1.6</bundle>
-        <bundle start-level="20">mvn:org.apache.commons/commons-pool2/2.4.1</bundle>
-        <bundle start-level="20">mvn:org.apache.commons/commons-dbcp2/2.1.1</bundle>
-        <bundle start-level="20">mvn:commons-codec/commons-codec/1.10</bundle>
-        <bundle start-level="35">mvn:commons-fileupload/commons-fileupload/1.3.1</bundle>
-        <bundle start-level="20">mvn:commons-lang/commons-lang/2.6</bundle>
-        <bundle start-level="20">mvn:commons-logging/commons-logging/1.2</bundle>
-        <bundle start-level="20">mvn:commons-configuration/commons-configuration/1.10</bundle>
-        <bundle start-level="20">mvn:org.apache.commons/commons-math3/3.6.1</bundle>
-        <bundle start-level="20">mvn:org.apache.commons/commons-math/2.2</bundle>
+        <feature>http</feature>
+        <bundle>mvn:commons-beanutils/commons-beanutils/1.9.2</bundle>
+        <bundle>mvn:commons-collections/commons-collections/3.2.2</bundle>
+        <bundle>mvn:commons-io/commons-io/2.6</bundle>
+        <bundle>mvn:commons-pool/commons-pool/1.6</bundle>
+        <bundle>mvn:org.apache.commons/commons-pool2/2.4.1</bundle>
+        <bundle>mvn:org.apache.commons/commons-dbcp2/2.1.1</bundle>
+        <bundle>mvn:commons-codec/commons-codec/1.10</bundle>
+        <bundle>mvn:commons-fileupload/commons-fileupload/1.3.1</bundle>
+        <bundle>mvn:commons-lang/commons-lang/2.6</bundle>
+        <bundle>mvn:commons-logging/commons-logging/1.2</bundle>
+        <bundle>mvn:commons-configuration/commons-configuration/1.10</bundle>
+        <bundle>mvn:org.apache.commons/commons-math3/3.6.1</bundle>
+        <bundle>mvn:org.apache.commons/commons-math/2.2</bundle>
     </feature>
 
     <feature name="apache-httpclient" version="4.5.3" description="Apache HTTPClient">
-        <feature>javax-servlet-api</feature>
-        <bundle start-level="20">mvn:org.apache.httpcomponents/httpcore-osgi/4.4.6</bundle>
-        <bundle start-level="20">mvn:org.apache.httpcomponents/httpclient-osgi/4.5.3</bundle>
+        <feature>http</feature>
+        <bundle>mvn:org.apache.httpcomponents/httpcore-osgi/4.4.6</bundle>
+        <bundle>mvn:org.apache.httpcomponents/httpclient-osgi/4.5.3</bundle>
     </feature>
 
     <feature name="guava-20" version="20.0" description="Google Guava 20">
-        <bundle start-level="20">mvn:com.google.guava/guava/20.0</bundle>
+        <bundle>mvn:com.google.guava/guava/20.0</bundle>
     </feature>
     <feature name="joda-time" version="2.9.5" description="Joda Time">
-        <bundle start-level="20">mvn:joda-time/joda-time/2.9.5</bundle>
+        <bundle>mvn:joda-time/joda-time/2.9.5</bundle>
     </feature>
 
-    <feature install= "false" name="icu4j" version="49.1" description="IBM ICU4J">
-        <bundle start-level="20">mvn:com.ibm.icu/icu4j/49.1</bundle>
+    <feature install="false" name="icu4j" version="49.1" description="IBM ICU4J">
+        <bundle>mvn:com.ibm.icu/icu4j/49.1</bundle>
     </feature>
 
     <feature name="antlr4" version="4.5.1" description="ANTLR v4">
-        <bundle start-level="20">mvn:org.antlr/antlr4-runtime/4.5.1-1</bundle>
+        <bundle>mvn:org.antlr/antlr4-runtime/4.5.1-1</bundle>
     </feature>
 
-    <!-- Bouncy castle version have to kept 1.55, because from 1.56 the apache-sshd implementation porting as optional dependency which causes karaf restart -->
-    <feature name="bouncycastle" version="1.55" description="BouncyCastle">
-        <bundle start-level="35">mvn:org.bouncycastle/bcprov-jdk15on/1.55</bundle>
-        <bundle start-level="35">mvn:org.bouncycastle/bcmail-jdk15on/1.55</bundle>
-        <bundle start-level="35">mvn:org.bouncycastle/bcpkix-jdk15on/1.55</bundle>
-    </feature>
+    <feature name="bouncycastle" version="1.69" description="BouncyCastle">
+        <bundle>mvn:org.bouncycastle/bcprov-jdk15on/1.69</bundle>
+        <bundle>mvn:org.bouncycastle/bcmail-jdk15on/1.69</bundle>
+        <bundle>mvn:org.bouncycastle/bcpkix-jdk15on/1.69</bundle>
+        <bundle>mvn:org.bouncycastle/bcutil-jdk15on/1.69</bundle>
 
+    </feature>
     <feature name="dropwizard-metrics" version="3.2.2" description="Dropwizard">
-        <bundle start-level="35">mvn:io.dropwizard.metrics/metrics-core/3.2.2</bundle>
-        <bundle start-level="35">mvn:org.acplt.remotetea/remotetea-oncrpc/1.1.3</bundle>
-        <bundle start-level="35">mvn:info.ganglia.gmetric4j/gmetric4j/1.0.10</bundle>
-        <bundle start-level="35">mvn:io.dropwizard.metrics/metrics-ganglia/3.2.2</bundle>
-        <bundle start-level="35">mvn:io.dropwizard.metrics/metrics-graphite/3.2.2</bundle>
-        <bundle start-level="35">mvn:io.dropwizard.metrics/metrics-jvm/3.2.2</bundle>
+        <bundle>mvn:io.dropwizard.metrics/metrics-core/3.2.2</bundle>
+        <bundle>mvn:org.acplt.remotetea/remotetea-oncrpc/1.1.3</bundle>
+        <bundle>mvn:info.ganglia.gmetric4j/gmetric4j/1.0.10</bundle>
+        <bundle>mvn:io.dropwizard.metrics/metrics-ganglia/3.2.2</bundle>
+        <bundle>mvn:io.dropwizard.metrics/metrics-graphite/3.2.2</bundle>
+        <bundle>mvn:io.dropwizard.metrics/metrics-jvm/3.2.2</bundle>
     </feature>
 
     <feature name="xmlbeans" version="2.6.0" description="XMLBeans">
-        <bundle start-level="20">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlbeans/2.6.0_2</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlbeans/2.6.0_2</bundle>
     </feature>
 
     <feature name="apache-poi" version="3.13" description="Apache POI">
         <feature>bouncycastle</feature>
         <feature>apache-commons</feature>
         <feature>xmlbeans</feature>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.poi/org.apache.poi/3.13.1</bundle>
-    </feature>
-
-    <feature name="joda-time" version="2.9.5" description="Joda Time">
-        <bundle start-level="20">mvn:joda-time/joda-time/2.9.5</bundle>
+        <bundle >mvn:hu.blackbelt.bundles.poi/org.apache.poi/3.13.1</bundle>
     </feature>
 
     <feature name="velocity" version="1.7" description="Velocity">
@@ -149,10 +109,10 @@
         <feature>icu4j</feature>
         <feature>antlr4</feature>
         <feature>apache-commons</feature>
-        <bundle start-level="20">mvn:org.ow2.asm/asm-all/5.2</bundle>
-        <bundle start-level="35">mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-smile/2.9.1</bundle>
-        <bundle start-level="35">mvn:org.locationtech.spatial4j/spatial4j/0.6</bundle>
-        <bundle start-level="35">mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_2</bundle>
+        <bundle>mvn:org.ow2.asm/asm-all/5.2</bundle>
+        <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-smile/2.9.1</bundle>
+        <bundle>mvn:org.locationtech.spatial4j/spatial4j/0.6</bundle>
+        <bundle>mvn:hu.blackbelt.bundles.lucene/lucene-osgi/7.0.1_2</bundle>
     </feature>
 
     <feature install= "false" name="solr" version="7.0.1" description="Apache Solr">
@@ -166,42 +126,88 @@
         <feature>apache-httpclient</feature>
         <feature>dropwizard-metrics</feature>
         <feature>jsr305</feature>
-
+        <feature>javax-mail-api</feature>
         <!--
         <bundle start-level="35">mvn:com.google.jimfs/jimfs/1.1</bundle>
         -->
-        <bundle start-level="40">mvn:com.github.ben-manes.caffeine/caffeine/2.5.6</bundle>
-        <bundle start-level="40">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.noggit/0.8_1</bundle>
-        <bundle start-level="40">mvn:com.carrotsearch/hppc/0.7.2</bundle>
-        <bundle start-level="40">mvn:hu.blackbelt.bundles.t-digest/com.tdunning.t-digest/3.2_1</bundle>
-        <bundle start-level="40">mvn:hu.blackbelt.bundles.solr/org.apache.solr/7.0.1_2</bundle>
+        <bundle>mvn:com.github.ben-manes.caffeine/caffeine/2.5.6</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.noggit/0.8_1</bundle>
+        <bundle>mvn:com.carrotsearch/hppc/0.7.2</bundle>
+        <bundle>mvn:hu.blackbelt.bundles.t-digest/com.tdunning.t-digest/3.2_1</bundle>
+        <bundle>mvn:hu.blackbelt.bundles.solr/org.apache.solr/7.0.1_2</bundle>
 
-        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet/2.3.12</bundle>
-        <bundle start-level="40">mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
+        <bundle>mvn:org.restlet.osgi/org.restlet/2.3.12</bundle>
+        <bundle>mvn:org.apache.zookeeper/zookeeper/3.4.10</bundle>
     </feature>
 
     <feature name="osgi-utils" version="1.0.9" description="Blackbelt OSGi utils">
         <feature>guava-20</feature>
         <feature>scr</feature>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.9</bundle>
-        <bundle start-level="30">mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.9</bundle>
+        <bundle>mvn:hu.blackbelt.osgi.utils/osgi-api/1.0.9</bundle>
+        <bundle>mvn:hu.blackbelt.osgi.utils/osgi-impl/1.0.9</bundle>
     </feature>
 
-    <feature install= "false" name="solr-services" version="${project.version}" description="Apache Solr Services">
+    <feature install="false" name="solr-services" version="${project.version}" description="Apache Solr Services">
         <feature>scr</feature>
         <feature>solr</feature>
         <feature>osgi-utils</feature>
-        <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-services/${project.version}</bundle>
+        <bundle>mvn:hu.blackbelt/solr-osgi-services/${project.version}</bundle>
     </feature>
 
     <feature install= "false" name="solr-http" version="7.0.1" description="Apache Solr HTTP">
         <feature>http-whiteboard</feature>
         <feature>solr-services</feature>
 
-        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.servlet/2.3.12</bundle>
-        <bundle start-level="40">mvn:org.restlet.osgi/org.restlet.ext.osgi/2.3.12</bundle>
+        <bundle>mvn:org.restlet.osgi/org.restlet.ext.servlet/2.3.12</bundle>
+        <bundle>mvn:org.restlet.osgi/org.restlet.ext.osgi/2.3.12</bundle>
 
-        <bundle start-level="45">mvn:hu.blackbelt/solr-osgi-http/${project.version}</bundle>
+        <bundle>mvn:hu.blackbelt/solr-osgi-http/${project.version}</bundle>
+    </feature>
+
+    <feature install= "false" name="solr-osgi-example-configsets-exampleCollection" version="7.0.1" description="Apache Solr Example Collection">
+        <bundle>mvn:hu.blackbelt/solr-osgi-example-configsets-exampleCollection/${project.version}</bundle>
+        <config name="solr.http">
+            contextRoot = /solr
+            excludePatterns = /partials/.+,/solr.libs/.+,/solr.css/.+,/solr.js/.+,/img/.+,/tpl/.+
+        </config>
+        <config name="solr.corecontainer">
+            solrHome=/tmp/solr
+        </config>
+        <config name="solr.core-test1">
+            name=test1
+            configSet=exampleCollection
+        </config>
+    </feature>
+
+    <feature install= "false" name="solr-osgi-example-configsets-dataimportNorthwind" version="7.0.1" description="Apache Solr Example Northwind Dataimport">
+        <bundle>mvn:hu.blackbelt/solr-osgi-example-configsets-dataimportNorthwind/${project.version}</bundle>
+        <feature>jndi</feature>
+        <feature>jdbc</feature>
+        <feature>pax-jdbc-config</feature>
+        <feature>pax-jdbc-spec</feature>
+        <!--<feature>pax-jdbc-mariadb</feature>-->
+        <bundle>mvn:org.ops4j.pax.jdbc/pax-jdbc-mariadb/1.5.0</bundle>
+        <bundle>mvn:org.mariadb.jdbc/mariadb-java-client/2.4.4</bundle>
+
+        <config name="org.ops4j.datasource-northwind">
+            osgi.jdbc.driver.name=mariadb
+            databaseName=northwind
+            user=root
+            password=northwind
+            dataSourceName=northwind
+        </config>
+        <config name="solr.http">
+            contextRoot = /solr
+            excludePatterns = /partials/.+,/solr.libs/.+,/solr.css/.+,/solr.js/.+,/img/.+,/tpl/.+
+        </config>
+        <config name="solr.corecontainer">
+            solrHome=/tmp/solr
+        </config>
+        <config name="solr.core-northwind1">
+            name=northwind1
+            configSet=northwind
+            property.jndiName=northwind
+        </config>
     </feature>
 
 </features>
