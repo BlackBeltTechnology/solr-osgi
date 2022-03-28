@@ -1,27 +1,87 @@
 # Solr OSGi
 
-This project goal is to be able to run Apache Solr in OSGi environment and bring the OSGi dynamic lifecycle to the Solr world.
+This project's goal is to be able to run Apache Solr in an OSGi environment and bring the OSGi dynamic lifecycle to the
+Solr world.
 
 [NOTE]
 ====
-There is no all of the Solr features supported yet, clustering and sharding haven't been tested. In theory every piece of feature can be implemented in the future. Cellar based SolCloud implementation is planned. Now only configSet based cores can be used.
+Not all of the Solr features are supported yet, clustering and sharding haven't been tested. In theory every feature can
+be implemented in the future. Cellar based SolCloud implementation is planned. Currently only the configSet based cores can be used.
 ====
-
-## How it works?
-
-There are a declarative component called SolrCoreContainerManager which monitors the following items:
-
-* *solr.core* or *solr.core-<pid>* configuration PID-s in ConfigurationAdmin service. This configuration defines a core cofigurations. The properties are very same as can be used in CoreAdmin API. Custom properties can be defined in admin-requests, 'property' prefix can be used on custom properties. Two mandatory properties are: name and configSet. 
-
-* All bundles which have the Solr-Configset tag in *META-INF/MANIFEST.MF*. It loades configSets to CoreContainer. The cores can use thats configSets as a template. The configSets are stored to an in-Memory filesystem which is used to load files by solr. 
-
-The manager creates SolrClient instances when the configSet loaded which referenced by solr.core confugurations. In the future the core definitions which does not have configSet can be created as normal cores, but for that some file based resource management implementation is required.
-
-When a core config or configSet bundle removed the related solrClients are stopping. The data directory is not removed, so it can be reused later.
 
 ## Installation and usage
 
-Any OSGi 6.0 container canbe used for deployment. It is tested with Apache Karaf 4.1.2.
+### Use solr-osgi-karaf distribution
+
+The solr-osgi package bundled as offline karaf package. It can be installed and executed.
+
+Compile project
+
+----
+./mvnw clean install
+----
+
+To run on MacOS / Linux, use
+----
+./run-karaf
+----
+after compilation.
+
+Two examples are embedded, which can be installed.
+
+For Northwind example - which is the SQL DataImport example - northwind example has to be started
+before feature is started.
+
+----
+docker run --name northwind -itd -e MYSQL_ROOT_PASSWORD=northwind -p 3306:3306 bylek/northwind-mysql
+----
+
+When karaf is running, open the browser:
+
+`http://localhost:8181/system/console/features`
+
+Use `karaf` as username and password.
+
+image::images/features1.png[]
+
+image::images/features2.png[]
+
+After install `exampleCollection` and `exampleNorthwind` feature, point the browser to `http://localhost:8181/solr`
+
+image::images/solr.png[]
+
+Select `northwind1` core.
+
+image::images/select-core.png[]
+
+Select `Dataimport` menu
+
+image::images/dataimport-select.png[]
+
+Check `Auto-Refresh Status` and push `Execute`
+
+image::images/dataimport-execute.png[]
+
+After a couple of seconds, the following page shows that the data has been indexed.
+
+image::images/dataimport-result.png[]
+
+Let's start to search / browse. Select the `Query` function.
+
+image::images/select-query.png[]
+
+And execute one
+
+image::images/execute-query.png[]
+
+And check the result.
+
+image::images/query-result.png[]
+
+Happy searching!
+
+### Use your own karaf
+Any OSGi 6.0 container can be used for deployment. It is tested with Apache Karaf 4.3.6.
 
 To install in karaf console:
 
@@ -31,7 +91,7 @@ feature:repo-add mvn:hu.blackbelt/solr-osgi-feature/<version>/xml/features
 feature:install -v solr-http
 ----
 
-To be able to use the SolrCoreContainerManager's functionality have to create a configuration with pid *solr.corecontainer* 
+To be able to use the SolrCoreContainerManager's functionality you have to create a configuration with pid *solr.corecontainer*
 
 Create a file *solr.corecontainer.cfg* in *karaf/deploy* with the following content:
 
@@ -89,8 +149,7 @@ To add a configSet template, copy the *solr-osgi-example-configsets-exampleColle
 2018-08-22 00:33:04,869 | INFO  | tures-1-thread-1 | SolrCoreContainerMan
 ----
 
-The configSet files processed and copied to in-memory store.
-
+The configSet files are processed and copied to the in-memory store.
 
 To create a core based on a configSet, create a configuration with PID *solr.core-<pid>*
 
@@ -102,7 +161,7 @@ configSet=exampleCollection
 ----
 
 ## HTTP access
-To install HTTP service create configuration with PID *solr.http*
+To install the HTTP service, create a configuration with PID *solr.http*
 
 In karaf create a file *solr.http.cfg* in *karaf/deploy* with the following content:
 
@@ -111,9 +170,21 @@ contextRoot=/solr
 ----
 
 
-After the Solr Admin can be accessed http://localhost:8181/solr/
+After the steps above, Solr Admin should be accessible at http://localhost:8181/solr/
 
 
 ## Core container parameters
 
 Core containers have very same parameters as the original ones, but not all of them can be used now.
+
+## How it works?
+
+There is a declarative component called `SolrCoreContainerManager` which monitors the following items:
+
+* *solr.core* or *solr.core-<pid>* configuration PID-s in ConfigurationAdmin service. This configuration defines core configurations. The properties are very similar to the ones used in the CoreAdmin API. Custom properties can be defined in admin-requests, 'property' prefix can be used on custom properties. Two mandatory properties are: `name` and `configSet`.
+
+* All bundles which have the Solr-Configset tag in *META-INF/MANIFEST.MF*. It loads configSets to the CoreContainer. The cores can use those configSets as a template. The configSets are stored to an in-Memory filesystem which is used to load files by solr.
+
+The manager creates SolrClient instances when the configSet is loaded which are referenced by `solr.core` configurations. In the future the core definitions which do not have configSets can be created as normal cores, but for that some file based resource management implementation is required.
+
+When a core config or configSet bundle is removed, the related solrClients will be stopped. The data directory is not removed, so it can be reused later.
