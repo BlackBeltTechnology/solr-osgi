@@ -76,7 +76,7 @@
         <solr-version>7.0.1</solr-version>
 
         <osgi-utils-version>1.0.8</osgi-utils-version>
-        <maven>3.8.3</maven>
+        <maven>3.9.4</maven>
         <deployOnly>false</deployOnly>
 
         <revision>1.0.3-SNAPSHOT</revision>
