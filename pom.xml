@@ -70,7 +70,7 @@
         <findbugs.version>3.0.1</findbugs.version>
         <jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
 
-        <karaf-version>4.4.5</karaf-version>
+        <karaf-version>4.4.7</karaf-version>
         <cxf-version>3.5.1</cxf-version>
 
         <solr-version>7.0.1</solr-version>
@@ -529,7 +529,7 @@
                     <plugin>
                         <groupId>org.simplify4u.plugins</groupId>
                         <artifactId>sign-maven-plugin</artifactId>
-                        <version>0.3.1</version>
+                        <version>1.1.0</version>
                         <executions>
                             <execution>
                                 <goals>
