@@ -28,3 +28,7 @@ wercker.env
 **/.flattened-pom.xml
 
 .karaf
+.claude
+.gemini
+.opencode
+.agent
