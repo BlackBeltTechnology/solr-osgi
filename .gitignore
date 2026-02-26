@@ -28,3 +28,8 @@ wercker.env
 **/.flattened-pom.xml
 
 .karaf
+.claude/commands/opsx
+.claude/skills/openspec-*.md
+.gemini
+.opencode
+.agent
