@@ -32,6 +32,10 @@ Key facts:
 - [solr-osgi-example-configsets-exampleCollection/pom.xml](solr-osgi-example-configsets-exampleCollection/pom.xml): Minimal Solr configset bundle demonstrating the Solr-Configset manifest header pattern
 - [solr-osgi-example-configsets-dataimportNorthwind/pom.xml](solr-osgi-example-configsets-dataimportNorthwind/pom.xml): DataImport handler example using MySQL Northwind database
 
+## Depends on
+
+- [osgi-utils](../osgi-utils): runtime/osgi-utils
+
 ## Optional
 
 - [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD build pipeline
