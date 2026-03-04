@@ -1,0 +1,42 @@
+# Solr OSGi
+
+> Embeds Apache Solr inside an OSGi container (Apache Karaf), providing dynamic Solr core and configset management through OSGi services with in-memory configset storage.
+
+Key facts:
+- Java 11 (source/target), Java 21 for Karaf assembly runtime
+- Maven 3.9.4 multi-module project, 6 modules (+ parent POM)
+- Apache Solr 7.0.1 embedded in Apache Karaf 4.4.7 via OSGi
+- In-memory filesystem (Google JimFS) for configset storage — zero disk I/O
+- OSGi Declarative Services for component lifecycle
+- Apache License 2.0
+
+## Docs
+
+- [README.md](README.md): Project overview, architecture diagrams, installation, and usage
+- [AGENTS.md](AGENTS.md): Developer guide with build commands, module descriptions, and coding conventions
+- [CONTRIBUTING.md](CONTRIBUTING.md): Development setup and contribution guidelines
+- [.github/CIFLOW.md](.github/CIFLOW.md): CI/CD pipeline documentation with flow diagrams
+
+## Modules — Core
+
+- [solr-osgi-services/pom.xml](solr-osgi-services/pom.xml): Core OSGi bundle managing the Solr CoreContainer, configset bundle tracking, core configuration tracking, and core lifecycle
+- [solr-osgi-http/pom.xml](solr-osgi-http/pom.xml): HTTP bundle registering Solr endpoints via OSGi HTTP Whiteboard — dispatch filter, static resources, admin UI, and Restlet schema API
+
+## Modules — Packaging & Distribution
+
+- [solr-osgi-feature/pom.xml](solr-osgi-feature/pom.xml): Karaf feature descriptor generation aggregating all runtime bundles
+- [solr-osgi-karaf/pom.xml](solr-osgi-karaf/pom.xml): Pre-built offline Karaf distribution with Solr features pre-installed
+
+## Modules — Examples
+
+- [solr-osgi-example-configsets-exampleCollection/pom.xml](solr-osgi-example-configsets-exampleCollection/pom.xml): Minimal Solr configset bundle demonstrating the Solr-Configset manifest header pattern
+- [solr-osgi-example-configsets-dataimportNorthwind/pom.xml](solr-osgi-example-configsets-dataimportNorthwind/pom.xml): DataImport handler example using MySQL Northwind database
+
+## Depends on
+
+- [osgi-utils](../osgi-utils): runtime/osgi-utils
+
+## Optional
+
+- [.github/workflows/build.yml](.github/workflows/build.yml): CI/CD build pipeline
+- [pom.xml](pom.xml): Parent POM with version properties and dependency management
