@@ -34,7 +34,7 @@ Key facts:
 
 ## Depends on
 
-- [osgi-utils](../osgi-utils): runtime/osgi-utils
+- [osgi-utils](../osgi-utils): OSGi utility library — lifecycle tracking, config monitoring, ranked services
 
 ## Optional
 
